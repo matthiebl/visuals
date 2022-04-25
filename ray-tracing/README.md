@@ -5,7 +5,7 @@
 This is a simple ray tracing light source visual.
 The light source is projected from your mouse, and the walls are generated randomly.
 
-Try it out [here](https://github.com/matthiebl/visuals/ray-tracing)!
+Try it out [here](https://matthiebl.github.io/visuals/ray-tracing/)!
 
 Made with p5 library for JS
 
