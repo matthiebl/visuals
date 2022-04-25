@@ -6,9 +6,10 @@ let particle;
 let walls = [];
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    var cnv = createCanvas(0.75 * windowWidth, windowHeight);
+    cnv.parent('sketch-holder');
 
-    particle = new Particle();
+    particle = new Particle(width / 2, height / 2);
 
     // Create some random walls
     const xbuff = 0.05 * width;
@@ -30,7 +31,11 @@ function setup() {
 function draw() {
     background(0);
     
-    particle.update(mouseX, mouseY)
+    if (mouseX) {
+        particle.update(mouseX, mouseY)
+    } else {
+        particle.update(width / 2, height / 2);
+    }
     
     for (let wall of walls) {
         wall.show()
