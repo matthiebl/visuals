@@ -12,7 +12,35 @@
         <script src="../libraries/p5.sound.min.js"></script>
     </head>
 
-    <body>
+    <body style="font-family: Arial; word-break: normal">
+        <div style="display: flex; width: 100%">
+            <div id="sketch-holder" style="width: 75%; float: left"></div>
+            <div style="width: 21%; float: left; padding: 2%">
+                <div id="info">
+                    <h1>Ray Tracing Visual</h1>
+                    <p>
+                        This is a simple ray tracing light source visual.
+                        The light source is projected from your mouse,
+                        and the walls are generated randomly.
+                        <br>
+                        <br>
+                        Click <a href=".">here</a> to redraw walls.
+                    </p>
+                </div>
+                <div style="position: absolute; bottom: 2%; right: 2%">
+                    <p style="text-align: right">
+                        This visual was made with p5js.
+                        <br>
+                        <br>
+                        You can view my other visuals <a href="../">here</a>.
+                        <br>
+                        <br>
+                        Or check out the source code
+                        <a href="https://github.com/matthiebl/visuals/blob/master/ray-tracing" target="_blank">here</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
         <script src="Wall.js"></script>
         <script src="Ray.js"></script>
         <script src="Particle.js"></script>
