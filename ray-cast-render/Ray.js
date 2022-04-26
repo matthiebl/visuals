@@ -8,6 +8,7 @@ class Ray {
     constructor(pos, angle) {
         this.pos = pos;
         this.dir = p5.Vector.fromAngle(angle);
+        this.dist = null;
     }
 
     // Find the point of intersection between the ray and a wall
