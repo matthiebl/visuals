@@ -8,7 +8,7 @@ class Particle {
     constructor() {
         this.pos = createVector(width / 2, height / 2);
         this.rays = [];
-        for (let angle = 0; angle < 360; angle += 1) {
+        for (let angle = 0; angle < 360; angle += 0.1) {
             this.rays.push(new Ray(this.pos, radians(angle)));
         }
         this.range = [30, 60];
@@ -21,8 +21,11 @@ class Particle {
     lookAt(x, y) {
         const dir = createVector(x - this.pos.x, y - this.pos.y);
         const base = createVector(1, 0);
-        let angle = round(degrees(base.angleBetween(dir)));
-        this.range = [angle - 14, angle + 15];
+        const raysInDegree = round(this.rays.length / 360);
+        const buff = 15;
+        let angle = round(degrees(base.angleBetween(dir)) * raysInDegree);
+        console.log(this.rays.length, angle * raysInDegree);
+        this.range = [angle - buff * raysInDegree, angle + buff * raysInDegree];
     }
     
     // Project the rays onto the walls and display them
@@ -35,8 +38,9 @@ class Particle {
         for (let i = this.range[0]; i < this.range[1]; i++) {
             let ray = i;
             if (i < 0) {
-                ray += 360;
+                ray += this.rays.length;
             }
+            console.log(ray)
             // Find the closest wall by distance from particle
             let dist = Infinity;
             let closest = null;
@@ -45,8 +49,8 @@ class Particle {
                 if (pt) {
                     const d = p5.Vector.dist(this.pos, pt);
                     if (d < dist) {
-                    dist = d;
-                    closest = pt;
+                        dist = d;
+                        closest = pt;
                     }
                 }
             }
@@ -63,7 +67,7 @@ class Particle {
         for (let i = this.range[0]; i < this.range[1]; i++) {
             let ray = i;
             if (i < 0) {
-                ray += 360;
+                ray += this.rays.length;
             }
             dists.push(this.rays[ray].dist);
         }
