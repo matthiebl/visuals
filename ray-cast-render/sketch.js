@@ -75,15 +75,9 @@ function keyReleased() {
 function draw() {
     speed = map(select('#speed').value(), 0, 10, 1, 5);
     background(0);
-    // console.log(l, r, u, d);
     
     particle.lookAt(mouseX, mouseY);
     particle.update(particle.pos.x + speed * (l + r), particle.pos.y + speed * (u + d));
-    // if (mouseX) {
-    //     particle.update(mouseX, mouseY)
-    // } else {
-    //     particle.update(width / 2, height / 2);
-    // }
     
     for (let wall of walls) {
         wall.show()
