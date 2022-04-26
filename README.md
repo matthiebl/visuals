@@ -13,3 +13,9 @@ Check out some of them below!
 A simple ray tracing light source visual.
 
 [Visual](https://matthiebl.github.io/visuals/ray-tracing) -- [Code](https://github.com/matthiebl/visuals/blob/master/ray-tracing)
+
+## Ray Tracing View Render
+
+A simple ray tracer that renders a scene using a primitive ray-casting algorithm.
+
+[Visual](https://matthiebl.github.io/visuals/ray-cast-render) -- [Code](https://github.com/matthiebl/visuals/blob/master/ray-cast-render)
