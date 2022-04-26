@@ -17,14 +17,24 @@
             <div id="sketch-holder" style="width: 75%; float: left"></div>
             <div style="width: 21%; float: left; padding: 2%">
                 <div id="info">
-                    <h1>Ray Tracing Visual</h1>
+                    <h1>Ray Tracing Rendering</h1>
                     <p>
-                        This is a simple ray tracing light source visual.
-                        The light source is projected from your mouse,
-                        and the walls are generated randomly.
-                        <br>
-                        <br>
-                        Click <a href=".">here</a> to redraw walls.
+                        This is a simple ray tracer that renders a scene using
+                        a primitive ray-casting algorithm. The large view is a
+                        top-down view of the scene. The smaller view is the a
+                        3D-esque perspective of the camera.
+                    </p>
+                    <p>
+                        You can use the mouse to point the camera and the
+                        arrow or WASD keys to move the camera.
+                    </p>
+                    <div class="speedSlider">
+                        <p>Camera speed:</p>
+                        <input style="width: 100%" type="range" min="0" max="10" value="5" class="slider" id="speed">
+                    </div>
+                    <br>
+                    <p>
+                        Click <a href=".">here</a> to reset the scene.
                     </p>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
@@ -32,7 +42,7 @@
                         This visual was made with p5js.
                         <br>
                         <br>
-                        Credit to
+                        Inspired by
                         <a href="https://www.youtube.com/watch?v=TOEi6T2mtHo&ab_channel=TheCodingTrain" target="_blank">Daniel Shiffman</a>
                         <br>
                         <br>
@@ -40,7 +50,7 @@
                         <br>
                         <br>
                         Or check out the source code
-                        <a href="https://github.com/matthiebl/visuals/blob/master/ray-tracing" target="_blank">here</a>
+                        <a href="https://github.com/matthiebl/visuals/blob/master/ray-cast-render" target="_blank">here</a>
                     </p>
                 </div>
             </div>
