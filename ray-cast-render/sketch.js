@@ -40,7 +40,7 @@ let l = 0;
 let r = 0;
 let u = 0;
 let d = 0;
-let speed = 3;
+let speed;
 
 function keyPressed() {
     if (keyCode === LEFT_ARROW) {
@@ -73,6 +73,7 @@ function keyReleased() {
 }
 
 function draw() {
+    speed = map(select('#speed').value(), 0, 10, 1, 5);
     background(0);
     // console.log(l, r, u, d);
     
