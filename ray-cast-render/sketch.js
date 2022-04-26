@@ -31,15 +31,17 @@ function setup() {
 function draw() {
     background(0);
     
-    if (mouseX) {
-        particle.update(mouseX, mouseY)
-    } else {
-        particle.update(width / 2, height / 2);
-    }
+    particle.lookAt(mouseX, mouseY);
+    // if (mouseX) {
+    //     particle.update(mouseX, mouseY)
+    // } else {
+    //     particle.update(width / 2, height / 2);
+    // }
     
     for (let wall of walls) {
         wall.show()
     }
     
     particle.project(walls);
+    console.log(particle.getDists());
 }
