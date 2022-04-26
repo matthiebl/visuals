@@ -43,31 +43,31 @@ let d = 0;
 let speed;
 
 function keyPressed() {
-    if (keyCode === LEFT_ARROW) {
+    if (keyCode === LEFT_ARROW || key === 'a') {
         l = -1;
     }
-    if (keyCode === RIGHT_ARROW) {
+    if (keyCode === RIGHT_ARROW || key === 'd') {
         r = 1;
     }
-    if (keyCode === UP_ARROW) {
+    if (keyCode === UP_ARROW || key === 'w') {
         u = -1;
     }
-    if (keyCode === DOWN_ARROW) {
+    if (keyCode === DOWN_ARROW || key === 's') {
         d = 1;
     }
 }
 
 function keyReleased() {
-    if (keyCode === LEFT_ARROW) {
+    if (keyCode === LEFT_ARROW || key === 'a') {
         l = 0;
     }
-    if (keyCode === RIGHT_ARROW) {
+    if (keyCode === RIGHT_ARROW || key === 'd') {
         r = 0;
     }
-    if (keyCode === UP_ARROW) {
+    if (keyCode === UP_ARROW || key === 'w') {
         u = 0;
     }
-    if (keyCode === DOWN_ARROW) {
+    if (keyCode === DOWN_ARROW || key === 's') {
         d = 0;
     }
 }
