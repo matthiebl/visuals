@@ -4,7 +4,7 @@ Here are a collection of some cool visuals and renderings I have created either 
 
 I really like the p5js library for visuals as my talent with CSS is limited.
 
-[Link to repo](https://github.com/matthiebl/visuals)
+[Site](https://matthiebl.github.io/visuals) -- [Code](https://github.com/matthiebl/visuals)
 
 Check out some of them below!
 
