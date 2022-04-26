@@ -2,8 +2,13 @@
 // https://www.youtube.com/watch?v=TOEi6T2mtHo&ab_channel=TheCodingTrain
 // All credit goes to Daniel Shiffman.
 
+// The small camera rendering has completely been written by myself.
+// The idea was inspired by the above.
+
 let particle;
 let walls = [];
+let camWidth;
+let camHeight;
 
 function setup() {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
@@ -26,6 +31,9 @@ function setup() {
     walls.push(new Wall(0, 0, 0, height));
     walls.push(new Wall(0, height, width, height));
     walls.push(new Wall(width, 0, width, height));
+
+    camWidth = width / 4;
+    camHeight = height / 4;
 }
 
 function draw() {
@@ -43,5 +51,20 @@ function draw() {
     }
     
     particle.project(walls);
-    console.log(particle.getDists());
+
+    stroke(255);
+    fill(0);
+    rect(10, 10, camWidth + 1, camHeight);
+    let dists = particle.getDists();
+    for (let i = 0; i < dists.length; i++) {
+        strokeWeight(0);
+        fill(255 - map(dists[i], 0, 1000, 155, 255));
+        const boxHeight = camHeight - map(dists[i], 0, 1000, 0, camHeight);
+        rect(
+            10 + i * camWidth / dists.length,
+            10 + (camHeight - boxHeight) / 2,
+            camWidth / dists.length + 1,
+            boxHeight
+        );
+    }
 }
