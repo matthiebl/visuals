@@ -36,10 +36,48 @@ function setup() {
     camHeight = height / 4;
 }
 
+let l = 0;
+let r = 0;
+let u = 0;
+let d = 0;
+let speed = 3;
+
+function keyPressed() {
+    if (keyCode === LEFT_ARROW) {
+        l = -1;
+    }
+    if (keyCode === RIGHT_ARROW) {
+        r = 1;
+    }
+    if (keyCode === UP_ARROW) {
+        u = -1;
+    }
+    if (keyCode === DOWN_ARROW) {
+        d = 1;
+    }
+}
+
+function keyReleased() {
+    if (keyCode === LEFT_ARROW) {
+        l = 0;
+    }
+    if (keyCode === RIGHT_ARROW) {
+        r = 0;
+    }
+    if (keyCode === UP_ARROW) {
+        u = 0;
+    }
+    if (keyCode === DOWN_ARROW) {
+        d = 0;
+    }
+}
+
 function draw() {
     background(0);
+    // console.log(l, r, u, d);
     
     particle.lookAt(mouseX, mouseY);
+    particle.update(particle.pos.x + speed * (l + r), particle.pos.y + speed * (u + d));
     // if (mouseX) {
     //     particle.update(mouseX, mouseY)
     // } else {
