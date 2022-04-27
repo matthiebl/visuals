@@ -4,7 +4,7 @@ Here are a collection of some cool visuals and renderings I have created either 
 
 I really like the p5js library for visuals as my talent with CSS is limited.
 
-[Site](https://matthiebl.github.io/visuals) -- [Code](https://github.com/matthiebl/visuals)
+[Site](https://matthiebl.github.io/visuals/) -- [Code](https://github.com/matthiebl/visuals/)
 
 Check out some of them below!
 
@@ -12,10 +12,17 @@ Check out some of them below!
 
 A simple ray tracing light source visual.
 
-[Visual](https://matthiebl.github.io/visuals/ray-tracing) -- [Code](https://github.com/matthiebl/visuals/blob/master/ray-tracing)
+[Visual](https://matthiebl.github.io/visuals/ray-tracing/) -- [Code](https://github.com/matthiebl/visuals/blob/master/ray-tracing/)
 
 ## Ray Tracing View Render
 
 A simple ray tracer that renders a scene using a primitive ray-casting algorithm.
 
-[Visual](https://matthiebl.github.io/visuals/ray-cast-render) -- [Code](https://github.com/matthiebl/visuals/blob/master/ray-cast-render)
+[Visual](https://matthiebl.github.io/visuals/ray-cast-render/) -- [Code](https://github.com/matthiebl/visuals/blob/master/ray-cast-render/)
+
+## Minimal Spanning Tree
+
+A visualisation of how Prim's and Kruskal's algorithm work towards finding
+the minimal spanning tree of a graph.
+
+[Visual](https://matthiebl.github.io/visuals/graphs/mst/) -- [Code](https://github.com/matthiebl/visuals/blob/master/graphs/mst/)
