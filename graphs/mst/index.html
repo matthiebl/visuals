@@ -10,6 +10,11 @@
 
         <script src="../../libraries/p5.min.js"></script>
         <!-- <script src="../../libraries/p5.sound.min.js"></script> -->
+        <script>
+            function display_val(id, x) {
+                document.getElementById(id).innerHTML = x;
+            }
+        </script>
     </head>
 
     <body style="font-family: Arial; word-break: normal">
@@ -25,14 +30,20 @@
                         <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's algorithm</a>,
                         and the one on the right is
                         <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's algorithm</a>.
+                        They are both finding the MST of a complete graph with
+                        the Euclidean distance between each vertex as the edge
+                        weight.
                     </p>
-                    <p>
-                        You can use the mouse to point the camera and the
-                        arrow or WASD keys to move the camera.
-                    </p>
-                    <p>
-                        Click <a href=".">here</a> to reset the scene.
-                    </p>
+                    <button onclick="prims.setup(numVert.value)">Reset</button>
+                    <br>
+                    <div>
+                        <p>Solve speed:</p>
+                        <input style="width: 100%" type="range" min="0" max="100" value="50"id="speed">
+                    </div>
+                    <div>
+                        <p>Vertices: <span id="num-vert-display">50</span></p>
+                        <input style="width: 100%" type="range" min="3" max="150" value="50" id="numVert" onchange="display_val('num-vert-display', this.value); prims.setup(this.value)">
+                    </div>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
                     <p style="text-align: right">

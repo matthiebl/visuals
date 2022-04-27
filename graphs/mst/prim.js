@@ -1,11 +1,11 @@
 
 var prim = function(p) {
 
-    p.setup = function() {
+    p.setup = function(nV=50) {
         var cnv1 = p.createCanvas(0.375 * p.windowWidth, p.windowHeight);
         cnv1.parent('prim-sketch');
 
-        p.g = new Graph(100);
+        p.g = new Graph(nV);
         
         // Create some dummy vertices
         let r = p.width / 30;
@@ -42,18 +42,13 @@ var prim = function(p) {
             p.Q.push(v)
         }
         
-        p.interval = setInterval(p.primStep, 500);
-        
         p.currV = null;
-        p.currEdges = [];
         p.F = [];
         p.mst = [];
     }
 
     p.primStep = function() {
-        p.currEdges = [];
         if (p.Q.length === 0) {
-            clearInterval(p.interval);
             return;
         }
 
@@ -65,23 +60,19 @@ var prim = function(p) {
             }
         }
         p.Q.splice(p.Q.indexOf(v), 1);
-        if (p.E[v] !== -1) {
-            p.mst.push([v, p.E[v]])
-        }
         p.currV = v;
-
+        
         // Add v to F
         p.F.push(v);
         if (p.E[v] !== -1) {
             // Add E[v] to F
             p.F.push(p.E[v]);
         }
-
+        
         // Find neighbours of v
         let neighbours = p.g.getNeighbours(v);
         for (let w of neighbours) {
             if (p.Q.includes(w)) {
-                p.currEdges.push([v, w]);
                 // Update C[w]
                 if (p.g.getEdge(v, w) < p.C[w]) {
                     p.C[w] = p.g.getEdge(v, w);
@@ -91,9 +82,16 @@ var prim = function(p) {
                 p.allEdges.splice(p.allEdges.indexOf([v, w]), 1);
             }
         }
+        if (p.E[v] !== -1) {
+            p.mst.push([v, p.E[v]])
+        }
     }
 
     p.draw = function() {
+        let solveSpeed = p.map(p.select('#speed').value(), 0, 100, 0.75, 4) ** 2;
+        p.frameRate(solveSpeed);
+        p.primStep();
+
         p.background(0);
         
         p.noFill();
@@ -101,31 +99,35 @@ var prim = function(p) {
         p.strokeWeight(10);
         p.rect(0, 0, p.width, p.height);
 
-        for (let [v, w] of p.allEdges) {
-            p.stroke(255, 50);
-            p.strokeWeight(1);
-            p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+        // Draw every edge in the graph
+        // for (let [v, w] of p.allEdges) {
+        //     p.stroke(255, 50);
+        //     p.strokeWeight(1);
+        //     p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+        // }
+        
+        // Edges to consider for MST
+        for (let w = 0; w < p.E.length; w++) {
+            let v = p.E[w];
+            if (v !== -1) {
+                p.stroke(0, 0, 255, 100);
+                p.strokeWeight(1);
+                p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+            }
         }
-
-        // Draw the vertices of the graph
-        for (let v of p.vertices) {
-            p.stroke(255);
-            p.strokeWeight(v.r);
-            p.point(v.x, v.y);
-        }
-
-        // Draw the edges of the MST
+        // Edges in MST
         for (let e of p.mst) {
             const [v, w] = e;
             p.stroke(0, 0, 255);
             p.strokeWeight(5);
             p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
         }
-        for (let e of p.currEdges) {
-            const [v, w] = e;
-            p.stroke(255, 0, 0, 200);
-            p.strokeWeight(2);
-            p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+            
+        // Draw the vertices of the graph
+        for (let v of p.Q) {
+            p.stroke(255);
+            p.strokeWeight(p.vertices[v].r);
+            p.point(p.vertices[v].x, p.vertices[v].y);
         }
 
         // Draw the vertices of the MST
