@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Minimal Spanning Tree</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <script src="../../libraries/p5.min.js"></script>
+        <!-- <script src="../../libraries/p5.sound.min.js"></script> -->
+    </head>
+
+    <body style="font-family: Arial; word-break: normal">
+        <div style="display: flex; width: 100%">
+            <div id="prim-sketch" style="width: 37.5%; float: left"></div>
+            <div id="kruskal-sketch" style="width: 37.5%; float: right"></div>
+            <div style="width: 21%; float: left; padding: 2%">
+                <div id="info">
+                    <h1>Minimal Spanning Tree</h1>
+                    <p>
+                        This is a visual representation of two main MST
+                        algorithms. The one on the left is 
+                        <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's algorithm</a>,
+                        and the one on the right is
+                        <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's algorithm</a>.
+                    </p>
+                    <p>
+                        You can use the mouse to point the camera and the
+                        arrow or WASD keys to move the camera.
+                    </p>
+                    <p>
+                        Click <a href=".">here</a> to reset the scene.
+                    </p>
+                </div>
+                <div style="position: absolute; bottom: 2%; right: 2%">
+                    <p style="text-align: right">
+                        This visual was made with p5js.
+                        <br>
+                        <br>
+                        You can view my other visuals <a href="../../">here</a>
+                        <br>
+                        <br>
+                        Or check out the source code
+                        <a href="https://github.com/matthiebl/visuals/blob/master/graphs/mst" target="_blank">here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="../Graph.js"></script>
+        <script src="prim.js"></script>
+        <script src="kruskal.js"></script>
+    </body>
+</html>
