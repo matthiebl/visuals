@@ -98,19 +98,12 @@ var prim = function(p) {
         p.stroke(255);
         p.strokeWeight(10);
         p.rect(0, 0, p.width, p.height);
-
-        // Draw every edge in the graph
-        // for (let [v, w] of p.allEdges) {
-        //     p.stroke(255, 50);
-        //     p.strokeWeight(1);
-        //     p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
-        // }
         
         // Edges to consider for MST
         for (let w = 0; w < p.E.length; w++) {
             let v = p.E[w];
             if (v !== -1) {
-                p.stroke(0, 0, 255, 100);
+                p.stroke(0, 0, 255, 170);
                 p.strokeWeight(1);
                 p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
             }
