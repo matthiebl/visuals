@@ -5,10 +5,10 @@ var prim = function(p) {
         var cnv1 = p.createCanvas(0.375 * p.windowWidth, p.windowHeight);
         cnv1.parent('prim-sketch');
 
-        p.g = new Graph(10);
+        p.g = new Graph(100);
         
         // Create some dummy vertices
-        let r = p.width / 25;
+        let r = p.width / 30;
         p.vertices = [];
         for (let i = 0; i < p.g.getNumVertices(); i++) {
             let x = p.random(r + 5, p.width - (r + 5));
@@ -25,13 +25,11 @@ var prim = function(p) {
             });
         }
         
-        // Create some edges
-        for (let i = 0; i < p.g.getNumVertices() * 2; i++) {
-            let v = p.floor(p.random(p.g.getNumVertices()));
-            let w = p.floor(p.random(p.g.getNumVertices()));
-            
-            if (v !== w) {
-                p.g.addEdge(v, w, p.dist(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y));
+        p.allEdges = [];
+        for (let i = 0; i < p.g.getNumVertices(); i++) {
+            for (let j = i + 1; j < p.g.getNumVertices(); j++) {
+                p.g.addEdge(i, j, p.dist(p.vertices[i].x, p.vertices[i].y, p.vertices[j].x, p.vertices[j].y));
+                p.allEdges.push([i, j]);
             }
         }
 
@@ -44,7 +42,7 @@ var prim = function(p) {
             p.Q.push(v)
         }
         
-        p.interval = setInterval(p.primStep, 2000);
+        p.interval = setInterval(p.primStep, 500);
         
         p.currV = null;
         p.currEdges = [];
@@ -89,6 +87,8 @@ var prim = function(p) {
                     p.C[w] = p.g.getEdge(v, w);
                     p.E[w] = v;
                 }
+            } else {
+                p.allEdges.splice(p.allEdges.indexOf([v, w]), 1);
             }
         }
     }
@@ -101,14 +101,10 @@ var prim = function(p) {
         p.strokeWeight(10);
         p.rect(0, 0, p.width, p.height);
 
-        // Draw the edges
-        for (let v = 0; v < p.g.getNumVertices(); v++) {
-            let neighbours = p.g.getNeighbours(v);
-            for (let w of neighbours) {
-                p.stroke(255, 50);
-                p.strokeWeight(1);
-                p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
-            }
+        for (let [v, w] of p.allEdges) {
+            p.stroke(255, 50);
+            p.strokeWeight(1);
+            p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
         }
 
         // Draw the vertices of the graph
@@ -121,13 +117,13 @@ var prim = function(p) {
         // Draw the edges of the MST
         for (let e of p.mst) {
             const [v, w] = e;
-            p.stroke(255);
-            p.strokeWeight(1);
+            p.stroke(0, 0, 255);
+            p.strokeWeight(5);
             p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
         }
         for (let e of p.currEdges) {
             const [v, w] = e;
-            p.stroke(255, 0, 0);
+            p.stroke(255, 0, 0, 200);
             p.strokeWeight(2);
             p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
         }
