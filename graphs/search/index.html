@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Graph Search</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <script src="../../libraries/p5.min.js"></script>
+        <script>
+            function displayVal(id, x) {
+                document.getElementById(id).innerHTML = x;
+            }
+
+            function stepSimulation() {
+                if (speed.value == 0) {
+                    bfsSketch.step();
+                    dfsSketch.step();
+                }
+            }
+
+            function resetSimulation() {
+                let time = (new Date).getTime();
+                bfsSketch.setup(numVert.value, time);
+                dfsSketch.setup(numVert.value, time);
+            }
+
+            function updateNumVertices() {
+                displayVal('num-vert-display', numVert.value); bfsSketch.setup(numVert.value); dfsSketch.setup(numVert.value);
+            }
+        </script>
+    </head>
+
+    <body style="font-family: Arial; word-break: normal">
+        <div style="display: flex; width: 100%">
+            <div id="bfs-sketch" style="width: 37.5%; float: left"></div>
+            <div id="dfs-sketch" style="width: 37.5%; float: right"></div>
+            <div style="width: 21%; float: left; padding: 2%">
+                <div id="info">
+                    <h1>Graph Search</h1>
+                    <p>
+                        This is a visual representation of how
+                        <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank">BFS</a>
+                        and <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>
+                        search a graph. The two visuals represent BFS and DFS respectively.
+                    </p>
+                    <button onclick="resetSimulation()">Reset</button>
+                    <br>
+                    <div>
+                        <p>Speed:</p>
+                        <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed">
+                    </div>
+                    <button onclick="stepSimulation()">Step</button>
+                    <div>
+                        <p>Vertices: <span id="num-vert-display">50</span></p>
+                        <input style="width: 100%" type="range" min="3" max="300" value="50" id="numVert" onchange="updateNumVertices()">
+                    </div>
+                </div>
+                <div style="position: absolute; bottom: 2%; right: 2%">
+                    <p style="text-align: right">
+                        This visual was made with p5js
+                        <br>
+                        <br>
+                        You can view my <a href="../../">other visuals</a>
+                        <br>
+                        <br>
+                        Or check out the 
+                        <a href="https://github.com/matthiebl/visuals/blob/master/graphs/search" target="_blank">source code</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="../Graph.js"></script>
+        <script src="bfs.js"></script>
+        <script src="dfs.js"></script>
+    </body>
+</html>
