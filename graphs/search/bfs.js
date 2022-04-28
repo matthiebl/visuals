@@ -23,6 +23,7 @@ var bfs = function(p) {
                 x: x,
                 y: y,
                 r: r,
+                c: 255,
             });
         }
         
@@ -35,11 +36,27 @@ var bfs = function(p) {
         p.edges = p.g.getAllEdges();
 
         p.currV = p.floor(p.random(0, nV));
-        p.Q = [];
+        p.startV = p.currV;
+        p.V = new Set();
+        p.Q = [p.currV];
+        p.searchEdges = new Set();
     }
 
     p.step = function() {
-
+        if (p.Q.length === 0) {
+            p.currV = null;
+            return;
+        }
+        let v = p.Q.shift();
+        p.V.add(v);
+        for (let w of p.g.getNeighbours(v)) {
+            if (!p.V.has(w) && !p.Q.includes(w)) {
+                p.Q.push(w);
+                p.vertices[w].c = p.vertices[v].c - 600 / p.g.getNumVertices();
+                p.searchEdges.add([v, w]);
+            }
+        }
+        p.currV = v;
     }
 
     p.draw = function() {
@@ -47,7 +64,7 @@ var bfs = function(p) {
         if (rawSpeed === 0) {
             p.frameRate(60);
         } else {
-            let solveSpeed = p.map(rawSpeed, 0, 100, 0.75, 4) ** 3;
+            let solveSpeed = p.map(rawSpeed, 0, 100, 0.5, 2.5) ** 3;
             p.frameRate(solveSpeed);
             p.step();
         }
@@ -65,19 +82,38 @@ var bfs = function(p) {
         for (let [v, w] of p.edges) {
             p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
         }
+
+        // Draw the edges that have been searched
+        p.stroke(0, 0, 255);
+        p.strokeWeight(p.min(6, p.vertices[0].r / 2.5));
+        for (let [v, w] of p.searchEdges) {
+            p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+        }
         
+        p.stroke(150);
+        p.strokeWeight(1);
         // Draw the vertices of the graph.
-        for (let { x, y, r } of p.vertices) {
-            p.stroke(255);
-            p.strokeWeight(r);
-            p.point(x, y);
+        for (let { x, y, r, c } of p.vertices) {
+            if (c === 255) {
+                p.fill(c);
+            } else {
+                p.fill(0, c, 0);
+            }
+            p.circle(x, y, r * 1.5);
         }
 
-        // Draw the current vertex.
-        p.stroke(255, 0, 100);
-        p.strokeWeight(p.vertices[p.currV].r);
-        p.point(p.vertices[p.currV].x, p.vertices[p.currV].y);
+        // Draw the start vertex
+        p.fill(255, 0, 0);
+        p.circle(p.vertices[p.startV].x, p.vertices[p.startV].y, p.vertices[p.startV].r * 2);
 
+        // Draw the current vertex.
+        if (p.currV !== null) {
+            p.fill(255, 0, 100);
+            p.circle(p.vertices[p.currV].x, p.vertices[p.currV].y, p.vertices[p.currV].r * 1.5 + 1);
+            p.strokeWeight(0);
+            p.fill(255, 0, 100, 50);
+            p.circle(p.vertices[p.currV].x, p.vertices[p.currV].y, p.vertices[p.currV].r * 3);
+        }
     }
 
 }
