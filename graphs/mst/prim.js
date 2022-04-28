@@ -1,7 +1,7 @@
 
 var prim = function(p) {
 
-    p.setup = function(nV=50) {
+    p.setup = function(nV=50, seed=0) {
         var cnv1 = p.createCanvas(0.375 * p.windowWidth, p.windowHeight);
         cnv1.parent('prim-sketch');
 
@@ -10,6 +10,7 @@ var prim = function(p) {
         // Create some dummy vertices
         let r = p.width / 30 * 3 / (nV ** 0.35);
         p.vertices = [];
+        p.randomSeed(seed);
         for (let i = 0; i < p.g.getNumVertices(); i++) {
             let x = p.random(r + 5, p.width - (r + 5));
             let y = p.random(r + 5, p.height - (r + 5));
@@ -89,9 +90,14 @@ var prim = function(p) {
     }
 
     p.draw = function() {
-        let solveSpeed = p.map(p.select('#speed').value(), 0, 100, 0.75, 4) ** 2;
-        p.frameRate(solveSpeed);
-        p.primStep();
+        let rawSpeed = p.select('#speed').value();
+        if (rawSpeed === 0) {
+            p.frameRate(60);
+        } else {
+            let solveSpeed = p.map(rawSpeed, 0, 100, 0.75, 4) ** 2;
+            p.frameRate(solveSpeed);
+            p.primStep();
+        }
 
         p.background(0);
         
