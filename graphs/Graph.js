@@ -36,6 +36,34 @@ class Graph {
         return this.m[v][w];
     }
 
+    // Returns a set of all the edges in the graph as vertex pairs.
+    // Includes both (v, w) and (w, v) pairs.
+    getAllEdgesTo() {
+        let edges = new Set();
+        for (let v = 0; v < this.nV; v++) {
+            for (let w = 0; w < this.nV; w++) {
+                if (this.m[v][w] !== 0) {
+                    edges.add([v, w]);
+                }
+            }
+        }
+        return edges;
+    }
+
+    // Returns a set of all the edges in the graph as vertex pairs.
+    // Assumes the graph is undirected.
+    getAllEdges() {
+        let edges = new Set();
+        for (let v = 0; v < this.nV; v++) {
+            for (let w = v + 1; w < this.nV; w++) {
+                if (this.m[v][w] !== 0 && !edges.has([w, v])) {
+                    edges.add([v, w]);
+                }
+            }
+        }
+        return edges;
+    }
+
     // Returns a set of all the vertices adjacent to vertex, v.
     getNeighbours(v) {
         let neighbours = new Set();
@@ -76,14 +104,83 @@ class Graph {
         return;
     }
 
-    // Returns a boolean indicating if the graph is connected.
-    isConnected() {
-        // Uses a slow but correct algorithm.
-        for (let v = 0; v < this.nV; v++) {
-            if (!this.isPath(0, v)) {
-                return false;
+    dfsComponent(componentOf, v, id) {
+        componentOf[v] = id;
+        for (let w of this.getNeighbours(v)) {
+            if (componentOf[w] === -1) {
+                this.dfsComponent(componentOf, w, id);
             }
         }
-        return true;
+    }
+
+    // Returns a list with each index v contains the component id of vertex v.
+    components() {
+        let componentOf = [];
+        componentOf.fill(-1);
+
+        let id = 0;
+        for (let v = 0; v < this.nV; v++) {
+            if (componentOf[v] === -1) {
+                console.log(componentOf.toString());
+                dfsComponent(componentOf, v, id);
+                console.log(componentOf.toString());
+                id++;
+            }
+        }
+        return componentOf;
+    }
+
+    // Returns a boolean indicating if the graph is connected.
+    isConnected() {
+        if (this.components().every(v => v === 0)) {
+            return true;
+        }
+        return false;
+    }
+
+    // Returns a new graph containing the MST of the original graph.
+    // If the graph is not connected, returns null.
+    mstPrims() {
+        if (!this.isConnected()) {
+            return null;
+        }
+        // Uses Prim's algorithm to find the MST.
+        let mst = new Graph(this.getNumVertices());
+
+        let C = [];
+        let E = [];
+        let Q = new Set();
+        for (let v = 0; v < this.getNumVertices(); v++) {
+            C[v] = Infinity;
+            E[v] = -1;
+            Q.add(v);
+        }
+        let F = new Set();
+
+        while (Q.size > 0) {
+            // Find min cost edge in Q and remove it
+            let v = Q.values().next().value;
+            for (let w of Q) {
+                if (C[w] < C[v]) {
+                    v = w;
+                }
+            }
+            Q.delete(v);
+            F.add(v);
+            if (E[v] !== -1) {
+                F.add(E[v]);
+                mst.addEdge(E[v], v, C[v]);
+            }
+            // Update C and E
+            for (let w of this.getNeighbours(v)) {
+                if (Q.has(w)) {
+                    if (this.getEdge(v, w) < C[w]) {
+                        C[w] = this.getEdge(v, w);
+                        E[w] = v;
+                    }
+                }
+            }
+        }
+        return mst;
     }
 }
