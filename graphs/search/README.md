@@ -1,4 +1,4 @@
-# Graph Search - BFS - DFS
+# Graph Traversal - BFS - DFS
 
 ## General Info
 
