@@ -13,6 +13,23 @@
             function display_val(id, x) {
                 document.getElementById(id).innerHTML = x;
             }
+
+            function stepSimulation() {
+                if (speed.value == 0) {
+                    prims.primStep();
+                    kruskals.kruskalStep();
+                }
+            }
+
+            function resetSimulation() {
+                let time = (new Date).getTime();
+                prims.setup(numVert.value, time);
+                kruskals.setup(numVert.value, time);
+            }
+
+            function updateNumVertices() {
+                display_val('num-vert-display', numVert.value); prims.setup(numVert.value); kruskals.setup(numVert.value);
+            }
         </script>
     </head>
 
@@ -33,16 +50,16 @@
                         the Euclidean distance between each vertex as the edge
                         weight.
                     </p>
-                    <button onclick="prims.setup(numVert.value); kruskals.setup(numVert.value)">Reset</button>
+                    <button onclick="resetSimulation()">Reset</button>
                     <br>
                     <div>
                         <p>Solve speed:</p>
-                        <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed" onchange="prims.draw(this.value)">
+                        <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed">
                     </div>
-                    <button onclick="if (speed.value == 0) {prims.primStep(); kruskals.kruskalStep()}">Step</button>
+                    <button onclick="stepSimulation()">Step</button>
                     <div>
                         <p>Vertices: <span id="num-vert-display">50</span></p>
-                        <input style="width: 100%" type="range" min="3" max="300" value="50" id="numVert" onchange="display_val('num-vert-display', this.value); prims.setup(this.value); kruskals.setup(this.value)">
+                        <input style="width: 100%" type="range" min="3" max="300" value="50" id="numVert" onchange="updateNumVertices()">
                     </div>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
