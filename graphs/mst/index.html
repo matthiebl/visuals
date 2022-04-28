@@ -9,7 +9,6 @@
         <link rel="stylesheet" type="text/css" href="style.css">
 
         <script src="../../libraries/p5.min.js"></script>
-        <!-- <script src="../../libraries/p5.sound.min.js"></script> -->
         <script>
             function display_val(id, x) {
                 document.getElementById(id).innerHTML = x;
@@ -34,7 +33,7 @@
                         the Euclidean distance between each vertex as the edge
                         weight.
                     </p>
-                    <button onclick="prims.setup(numVert.value)">Reset</button>
+                    <button onclick="prims.setup(numVert.value); kruskals.setup(numVert.value)">Reset</button>
                     <br>
                     <div>
                         <p>Solve speed:</p>
@@ -42,19 +41,19 @@
                     </div>
                     <div>
                         <p>Vertices: <span id="num-vert-display">50</span></p>
-                        <input style="width: 100%" type="range" min="3" max="150" value="50" id="numVert" onchange="display_val('num-vert-display', this.value); prims.setup(this.value)">
+                        <input style="width: 100%" type="range" min="3" max="300" value="50" id="numVert" onchange="display_val('num-vert-display', this.value); prims.setup(this.value); kruskals.setup(this.value)">
                     </div>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
                     <p style="text-align: right">
-                        This visual was made with p5js.
+                        This visual was made with p5js
                         <br>
                         <br>
-                        You can view my other visuals <a href="../../">here</a>
+                        You can view my <a href="../../">other visuals</a>
                         <br>
                         <br>
-                        Or check out the source code
-                        <a href="https://github.com/matthiebl/visuals/blob/master/graphs/mst" target="_blank">here</a>
+                        Or check out the 
+                        <a href="https://github.com/matthiebl/visuals/blob/master/graphs/mst" target="_blank">source code</a>
                     </p>
                 </div>
             </div>
