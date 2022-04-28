@@ -8,7 +8,7 @@ var prim = function(p) {
         p.g = new Graph(nV);
         
         // Create some dummy vertices
-        let r = p.width / 30;
+        let r = p.width / 30 * 3 / (nV ** 0.35);
         p.vertices = [];
         for (let i = 0; i < p.g.getNumVertices(); i++) {
             let x = p.random(r + 5, p.width - (r + 5));
@@ -49,6 +49,7 @@ var prim = function(p) {
 
     p.primStep = function() {
         if (p.Q.length === 0) {
+            p.currV = null;
             return;
         }
 
@@ -103,16 +104,16 @@ var prim = function(p) {
         for (let w = 0; w < p.E.length; w++) {
             let v = p.E[w];
             if (v !== -1) {
-                p.stroke(0, 0, 255, 170);
-                p.strokeWeight(1);
+                p.stroke(0, 100, 255, 150);
+                p.strokeWeight(2);
                 p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
             }
         }
         // Edges in MST
-        for (let e of p.mst) {
-            const [v, w] = e;
+        for (let [v, w] of p.mst) {
             p.stroke(0, 0, 255);
-            p.strokeWeight(5);
+            // p.strokeWeight(5);
+            p.strokeWeight(p.min(6, p.vertices[v].r / 2.5));
             p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
         }
             
@@ -130,6 +131,9 @@ var prim = function(p) {
             p.point(p.vertices[v].x, p.vertices[v].y);
         }
         if (p.currV !== null) {
+            p.stroke(255, 0, 100, 50);
+            p.strokeWeight(p.vertices[p.currV].r * 2);
+            p.point(p.vertices[p.currV].x, p.vertices[p.currV].y);
             p.stroke(255, 0, 100);
             p.strokeWeight(p.vertices[p.currV].r);
             p.point(p.vertices[p.currV].x, p.vertices[p.currV].y);
