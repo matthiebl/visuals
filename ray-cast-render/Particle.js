@@ -24,7 +24,6 @@ class Particle {
         const raysInDegree = round(this.rays.length / 360);
         const buff = 15;
         let angle = round(degrees(base.angleBetween(dir)) * raysInDegree);
-        console.log(this.rays.length, angle * raysInDegree);
         this.range = [angle - buff * raysInDegree, angle + buff * raysInDegree];
     }
     
@@ -40,7 +39,6 @@ class Particle {
             if (i < 0) {
                 ray += this.rays.length;
             }
-            console.log(ray)
             // Find the closest wall by distance from particle
             let dist = Infinity;
             let closest = null;
