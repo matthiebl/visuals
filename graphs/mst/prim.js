@@ -94,7 +94,7 @@ var prim = function(p) {
         if (rawSpeed === 0) {
             p.frameRate(60);
         } else {
-            let solveSpeed = p.map(rawSpeed, 0, 100, 0.75, 4) ** 2;
+            let solveSpeed = p.map(rawSpeed, 0, 100, 0.75, 4) ** 3;
             p.frameRate(solveSpeed);
             p.primStep();
         }
