@@ -1,68 +1,64 @@
 
-let circle;
+let points;
+let centre;
 
 function setup() {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
     cnv.parent('sketch');
 
+    let ax = random(width/10, width - width/10);
+    let ay = random(height/10, height - height/10);
+    let bx = random(width/10, width - width/10);
+    let by = random(height/10, height - height/10);
+    let cx = random(width/10, width - width/10);
+    let cy = random(height/10, height - height/10);
+
+    let D = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by));
+    if (D === 0) {
+        setup();
+    }
+    let X = (
+        (ax * ax + ay * ay) * (by - cy) +
+        (bx * bx + by * by) * (cy - ay) +
+        (cx * cx + cy * cy) * (ay - by)
+    ) / D;
+    let Y = (
+        (ax * ax + ay * ay) * (cx - bx) +
+        (bx * bx + by * by) * (ax - cx) +
+        (cx * cx + cy * cy) * (bx - ax)
+    ) / D;
+    if (X < 0 || X > width || Y < 0 || Y > height) {
+        setup();
+    }
     points = [];
-    let a = createVector(random(width/10, width-width/10), random(height/10, height-height/10));
-    let b = createVector(random(width/10, width-width/10), random(height/10, height-height/10));
-    let c = createVector(random(width/10, width-width/10), random(height/10, height-height/10));
-    
-    background(0);
-    
-    stroke(255);
-    strokeWeight(width / 30);
-    point(a.x, a.y);
-    point(b.x, b.y);
-    point(c.x, c.y);
-    strokeWeight(0);
-    text("a", a.x, a.y);
-    text("b", b.x, b.y);
-    text("c", c.x, c.y);
-    
-    let unit = createVector(0, 0, 1);
-    let ab = p5.Vector.sub(b, a);
-    let ac = p5.Vector.sub(c, a);
-    let bc = p5.Vector.sub(c, b);
-    let abp = p5.Vector.cross(ab, unit).normalize();
-    let acp = p5.Vector.cross(ac, unit).normalize();
-    let bcp = p5.Vector.cross(bc, unit).normalize();
-    strokeWeight(1);
-    line(a.x, a.y, a.x + ab.x, a.y + ab.y);
-    line(a.x + ab.x/2, a.y + ab.y/2, a.x + ab.x/2 + 10000*abp.x, a.y + ab.y/2 + 10000*abp.y);
-    line(a.x + ab.x/2, a.y + ab.y/2, a.x + ab.x/2 - 10000*abp.x, a.y + ab.y/2 - 10000*abp.y);
-    line(a.x, a.y, a.x + ac.x, a.y + ac.y);
-    line(a.x + ac.x/2, a.y + ac.y/2, a.x + ac.x/2 + 10000*acp.x, a.y + ac.y/2 + 10000*acp.y);
-    line(a.x + ac.x/2, a.y + ac.y/2, a.x + ac.x/2 - 10000*acp.x, a.y + ac.y/2 - 10000*acp.y);
-    line(b.x, b.y, b.x + bc.x, b.y + bc.y);
-    line(b.x + bc.x/2, b.y + bc.y/2, b.x + bc.x/2 + 10000*bcp.x, b.y + bc.y/2 + 10000*bcp.y);
-    line(b.x + bc.x/2, b.y + bc.y/2, b.x + bc.x/2 - 10000*bcp.x, b.y + bc.y/2 - 10000*bcp.y);
+    points.push({ x: ax, y: ay });
+    points.push({ x: bx, y: by });
+    points.push({ x: cx, y: cy });
+    centre = { x: X, y: Y };
+}
 
-    let x1 = a.x + ab.x/2;
-    let y1 = a.y + ab.y/2;
-    let x2 = x1 + 50*abp.x;
-    let y2 = y1 + 50*abp.y;
-    let x3 = a.x + ac.x/2;
-    let y3 = a.y + ac.y/2;
-    let x4 = x3 + 50*acp.x;
-    let y4 = y3 + 50*acp.y;
-    
-    let D = (x1 - x2)*(y3 - y4) - (y1 - y2)*(x3 - x4);
-    if (D == 0) {
-        setup();
-    }
-    let px = ((x1*y2 - y1*x2)*(x3 - x4) - (x1 - x2)*(x3*y4 - y3*x4)) / D;
-    let py = ((x1*y2 - y1*x2)*(y3 - y4) - (y1 - y2)*(x3*y4 - y3*x4)) / D;
-
-    if (px < 0 || px > width || py < 0 || py > height) {
-        setup();
-    }
-    stroke(255);
-    strokeWeight(20);
-    point(px, py);
+function inCircumcircle(x, y) {
+    let d = dist(centre.x, centre.y, x, y);
+    let r = dist(centre.x, centre.y, points[1].x, points[1].y);
+    return d <= r;
 }
 
 function draw() {
+    background(51);
+
+    // Draw edges of triangle
+    stroke(0);
+    strokeWeight(2);
+    line(points[0].x, points[0].y, points[1].x, points[1].y);
+    line(points[1].x, points[1].y, points[2].x, points[2].y);
+    line(points[2].x, points[2].y, points[0].x, points[0].y);
+
+    // Draw circumcircle
+    if (inCircumcircle(mouseX, mouseY)) {
+        fill(0, 255, 0, 50);
+    } else {
+        fill(255, 0, 0, 50);
+    }
+    strokeWeight(3);
+    circle(centre.x, centre.y, 2 * dist(centre.x, centre.y, points[0].x, points[0].y));
 }
