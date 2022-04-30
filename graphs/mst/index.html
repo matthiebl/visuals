@@ -30,15 +30,21 @@
             function updateNumVertices() {
                 display_val('num-vert-display', numVert.value); prims.setup(numVert.value); kruskals.setup(numVert.value);
             }
+
+            window.addEventListener('resize', function(event) {
+                windowWidth = window.innerWidth;
+                windowHeight = window.innerHeight;
+                resetSimulation();
+            });
         </script>
     </head>
 
-    <body style="font-family: Arial; word-break: normal">
-        <div style="display: flex; width: 100%">
-            <div id="prim-sketch" style="width: 37.5%; float: left"></div>
-            <div id="kruskal-sketch" style="width: 37.5%; float: right"></div>
-            <div style="width: 21%; float: left; padding: 2%">
-                <div id="info">
+    <body>
+        <div id="container">
+            <div id="prim-sketch"></div>
+            <div id="kruskal-sketch"></div>
+            <div id="info">
+                <div>
                     <h1>Minimal Spanning Tree</h1>
                     <p>
                         This is a visual representation of two main MST

@@ -31,15 +31,21 @@
                 displayVal('num-vert-display', numVert.value);
                 resetSimulation();
             }
+
+            window.addEventListener('resize', function(event) {
+                windowWidth = window.innerWidth;
+                windowHeight = window.innerHeight;
+                resetSimulation();
+            });
         </script>
     </head>
 
-    <body style="font-family: Arial; word-break: normal">
-        <div style="display: flex; width: 100%">
-            <div id="bfs-sketch" style="width: 37.5%; float: left"></div>
-            <div id="dfs-sketch" style="width: 37.5%; float: right"></div>
-            <div style="width: 21%; float: left; padding: 2%">
-                <div id="info">
+    <body>
+        <div id="container">
+            <div id="bfs-sketch"></div>
+            <div id="dfs-sketch"></div>
+            <div id="info">
+                <div>
                     <h1>Graph Traversal</h1>
                     <p>
                         This is a visual representation of how

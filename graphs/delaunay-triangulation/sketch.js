@@ -41,6 +41,7 @@ function setup(nv=30) {
             points.push(new Point(x, y));
         }
     }
+    nV = points.length;
 }
 
 function once(arr, fn) {

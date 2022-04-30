@@ -37,8 +37,8 @@
         </script>
     </head>
 
-    <body style="font-family: Arial; word-break: normal">
-        <div id="container" style="display: flex; width: 100%">
+    <body>
+        <div id="container">
             <div id="sketch"></div>
             <div id="info">
                 <div>
@@ -75,7 +75,7 @@
                     <button onclick="stepSimulation()">Step</button>
                     <div>
                         <p>Vertices: <span id="num-vert-display">30</span></p>
-                        <input style="width: 100%" type="range" min="3" max="300" value="30" id="numVert" onchange="updateNumVertices()">
+                        <input id="numVert" style="width: 100%" type="range" min="3" max="300" value="30" onchange="updateNumVertices()">
                     </div>
                     <br>
                     <button onclick="resetSimulation()">Reset</button>

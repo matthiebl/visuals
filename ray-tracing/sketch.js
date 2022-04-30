@@ -3,15 +3,16 @@
 // All credit goes to Daniel Shiffman.
 
 let particle;
-let walls = [];
+let walls;
 
 function setup() {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch-holder');
+    cnv.parent('sketch');
 
     particle = new Particle(width / 2, height / 2);
 
     // Create some random walls
+    walls = [];
     const xbuff = 0.05 * width;
     const ybuff = 0.05 * height;
     for (let i = 0; i < 5; i++) {

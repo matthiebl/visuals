@@ -6,17 +6,20 @@
 // The idea was inspired by the above.
 
 let particle;
-let walls = [];
+let walls;
 let camWidth;
 let camHeight;
 
 function setup() {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch-holder');
+    cnv.parent('sketch');
 
+    background(0);
+    
     particle = new Particle(width / 2, height / 2);
-
+    
     // Create some random walls
+    walls = [];
     const xbuff = 0.05 * width;
     const ybuff = 0.05 * height;
     for (let i = 0; i < 5; i++) {
