@@ -53,8 +53,8 @@ class Triangle {
         const cx_ = this.c.x - d.x;
         const cy_ = this.c.y - d.y;
         const det = (
-            (ax_*ax_ + ay_*ay_) * (by_*cy_ - cy_*by_) -
-            (bx_*bx_ + by_*by_) * (ay_*cx_ - ax_*cy_) +
+            (ax_*ax_ + ay_*ay_) * (bx_*cy_ - cx_*by_) -
+            (bx_*bx_ + by_*by_) * (ax_*cy_ - cx_*ay_) +
             (cx_*cx_ + cy_*cy_) * (ax_*by_ - bx_*ay_)
         )
         if (this.isCounterClockwise()) {
@@ -63,7 +63,7 @@ class Triangle {
         return det < 0;
     }
 
-    sharesEdge(e) {
+    containsEdge(e) {
         for (let edge of this.edges) {
             if (edge.equals(e)) {
                 return true;
@@ -80,22 +80,26 @@ class Triangle {
         }
         return false;
     }
-}
 
-class TriangleMesh {
-    constructor() {
-        this.triangles = [];
+    occurencesOf(edge) {
+        let count = 0;
+
     }
 
-    [Symbol.iterator]() {
-        return this.triangles[Symbol.iterator]();
-    }
-
-    add(triangle) {
-        this.triangles.push(triangle);
-    }
-
-    remove(triangle) {
-        this.triangles.splice(this.triangles.indexOf(triangle), 1);
+    equals(other) {
+        if (this.a.equals(other.a) && this.b.equals(other.b) && this.c.equals(other.c)) {
+            return true;
+        } else if (this.a.equals(other.a) && this.b.equals(other.c) && this.c.equals(other.b)) {
+            return true;
+        } else if (this.a.equals(other.b) && this.b.equals(other.a) && this.c.equals(other.c)) {
+            return true;
+        } else if (this.a.equals(other.b) && this.b.equals(other.c) && this.c.equals(other.a)) {
+            return true;
+        } else if (this.a.equals(other.c) && this.b.equals(other.a) && this.c.equals(other.b)) {
+            return true;
+        } else if (this.a.equals(other.c) && this.b.equals(other.b) && this.c.equals(other.a)) {
+            return true;
+        }
+        return false;
     }
 }
