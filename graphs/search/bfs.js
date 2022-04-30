@@ -5,34 +5,38 @@ var bfs = function(p) {
         var cnv1 = p.createCanvas(0.375 * p.windowWidth, p.windowHeight);
         cnv1.parent('bfs-sketch');
         
+        p.background(0);
         p.g = new Graph(nV);
         
         // Create some dummy vertices
-        let r = p.width / 30 * 3 / (nV ** 0.35);
-        p.vertices = [];
+        p.r = p.width / 30 * 3 / (nV ** 0.35);
+        p.points = [];
         p.randomSeed(seed);
         for (let i = 0; i < nV; i++) {
-            let x = p.random(r + 5, p.width - (r + 5));
-            let y = p.random(r + 5, p.height - (r + 5));
-            while (p.vertices.some(v => p.dist(v.x, v.y, x, y) < 2 * r)) {
-                x = p.random(r + 5, p.width - (r + 5));
-                y = p.random(r + 5, p.height - (r + 5));
+            let x = p.random(p.r + 5, p.width - (p.r + 5));
+            let y = p.random(p.r + 5, p.height - (p.r + 5));
+            while (p.points.some(v => p.dist(v.x, v.y, x, y) < 2 * p.r)) {
+                x = p.random(p.r + 5, p.width - (p.r + 5));
+                y = p.random(p.r + 5, p.height - (p.r + 5));
             }
             
-            p.vertices.push({
-                x: x,
-                y: y,
-                r: r,
-                c: 255,
-            });
+            p.points.push(new Point(x, y));
+        }
+        p.colour = [];
+        for (let i = 0; i < nV; i++) {
+            p.colour.push(255);
         }
         
-        for (let i = 0; i < nV; i++) {
-            for (let j = i + 1; j < nV; j++) {
-                p.g.addEdge(i, j, p.dist(p.vertices[i].x, p.vertices[i].y, p.vertices[j].x, p.vertices[j].y));
+        if (p.select('#tree').checked()) {
+            for (let i = 0; i < nV; i++) {
+                for (let j = i + 1; j < nV; j++) {
+                    p.g.addEdge(i, j, p.dist(p.points[i].x, p.points[i].y, p.points[j].x, p.points[j].y));
+                }
             }
+            p.g = p.g.mst(p.g);
+        } else {
+            p.g = p.g.planarGraph(p.points);
         }
-        p.g = p.g.mstPrims(p.g);
         p.edges = p.g.getAllEdges();
 
         p.currV = p.floor(p.random(0, nV));
@@ -52,7 +56,7 @@ var bfs = function(p) {
         for (let w of p.g.getNeighbours(v)) {
             if (!p.V.has(w) && !p.Q.includes(w)) {
                 p.Q.push(w);
-                p.vertices[w].c = p.vertices[v].c - 600 / p.g.getNumVertices();
+                p.colour[w] = p.colour[v] - 600 / p.g.getNumVertices();
                 p.searchEdges.add([v, w]);
             }
         }
@@ -80,39 +84,40 @@ var bfs = function(p) {
         p.stroke(255, 150);
         p.strokeWeight(1);
         for (let [v, w] of p.edges) {
-            p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+            p.line(p.points[v].x, p.points[v].y, p.points[w].x, p.points[w].y);
         }
 
         // Draw the edges that have been searched
         p.stroke(0, 0, 255);
-        p.strokeWeight(p.min(6, p.vertices[0].r / 2.5));
+        p.strokeWeight(p.min(6, p.r / 2.5));
         for (let [v, w] of p.searchEdges) {
-            p.line(p.vertices[v].x, p.vertices[v].y, p.vertices[w].x, p.vertices[w].y);
+            p.line(p.points[v].x, p.points[v].y, p.points[w].x, p.points[w].y);
         }
         
         p.stroke(150);
         p.strokeWeight(1);
-        // Draw the vertices of the graph.
-        for (let { x, y, r, c } of p.vertices) {
-            if (c === 255) {
-                p.fill(c);
+        // Draw the points of the graph.
+        for (let i = 0; i < p.points.length; i++) {
+            if (p.colour[i] === 255) {
+                p.fill(255);
             } else {
-                p.fill(0, c, 0);
+                p.fill(255, p.colour[i], 0);
             }
-            p.circle(x, y, r * 1.5);
+            let { x, y } = p.points[i];
+            p.circle(x, y, p.r * 1.5);
         }
 
         // Draw the start vertex
-        p.fill(255, 0, 0);
-        p.circle(p.vertices[p.startV].x, p.vertices[p.startV].y, p.vertices[p.startV].r * 2);
+        p.fill(0, 255, 0);
+        p.circle(p.points[p.startV].x, p.points[p.startV].y, p.r * 2);
 
         // Draw the current vertex.
         if (p.currV !== null) {
             p.fill(255, 0, 100);
-            p.circle(p.vertices[p.currV].x, p.vertices[p.currV].y, p.vertices[p.currV].r * 1.5 + 1);
+            p.circle(p.points[p.currV].x, p.points[p.currV].y, p.r * 1.5 + 1);
             p.strokeWeight(0);
             p.fill(255, 0, 100, 50);
-            p.circle(p.vertices[p.currV].x, p.vertices[p.currV].y, p.vertices[p.currV].r * 3);
+            p.circle(p.points[p.currV].x, p.points[p.currV].y, p.r * 3);
         }
     }
 
