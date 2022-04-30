@@ -104,11 +104,11 @@ class Graph {
         return;
     }
 
-    dfsComponent(componentOf, v, id) {
+    _dfsComponent(componentOf, v, id) {
         componentOf[v] = id;
         for (let w of this.getNeighbours(v)) {
             if (componentOf[w] === -1) {
-                this.dfsComponent(componentOf, w, id);
+                this._dfsComponent(componentOf, w, id);
             }
         }
     }
@@ -121,9 +121,7 @@ class Graph {
         let id = 0;
         for (let v = 0; v < this.nV; v++) {
             if (componentOf[v] === -1) {
-                console.log(componentOf.toString());
-                dfsComponent(componentOf, v, id);
-                console.log(componentOf.toString());
+                _dfsComponent(componentOf, v, id);
                 id++;
             }
         }
@@ -140,7 +138,7 @@ class Graph {
 
     // Returns a new graph containing the MST of the original graph.
     // If the graph is not connected, returns null.
-    mstPrims() {
+    mst() {
         if (!this.isConnected()) {
             return null;
         }
@@ -182,5 +180,169 @@ class Graph {
             }
         }
         return mst;
+    }
+
+    // Returns a new graph containing a planar graph of the original graph.
+    // Ignores any edges already in the original graph.
+    planarGraph(points) {
+        // Uses Bowyer-Watson delaunay triangulation to find the planar graph.
+        let triangles = [];
+        let superTriangle = new Triangle(new Point(800, -1000), new Point(3200, 1000), new Point(-1600, 1000));
+        triangles.push(superTriangle);
+
+        for (let point of points) {
+            let badTriangles = [];
+            for (let triangle of triangles) { // first find all the triangles that are no longer valid due to the insertion
+                if (points.indexOf(point) !== 0 && triangle.equals(superTriangle)) {
+                    continue;
+                }
+                if (triangle.circumcircleContains(point)) {
+                    console.log()
+                    badTriangles.push(triangle);
+                }
+            }        
+            let polygon = [];
+            for (let triangle of badTriangles) { // find the boundary of the polygonal hole
+                for (let edge of triangle.edges) {
+                    if (once(badTriangles, t => t.containsEdge(edge))) {
+                        polygon.push(edge);
+                    }
+                }
+            }
+            for (let triangle of badTriangles) {
+                triangles.splice(triangles.indexOf(triangle), 1);
+            }
+            for (let edge of polygon) {// re-triangulate the polygonal hole
+                triangles.push(new Triangle(edge.a, edge.b, point));
+            }
+        }
+        let triCopy = triangles.slice();
+        for (let triangle of triCopy) {// done inserting points, now clean up
+            if (triangle.sharesPoint(superTriangle)) {
+                triangles.splice(triangles.indexOf(triangle), 1);
+            }
+        }
+
+        let planar = new Graph(this.getNumVertices());
+        for (let triangle of triangles) {
+            for (let edge of triangle.edges) {
+                let a = points.indexOf(edge.a);
+                let b = points.indexOf(edge.b);
+                if (a !== -1 && b !== -1) {
+                    planar.addEdge(a, b, edge.w);
+                }
+            }
+        }
+        return planar;
+    } 
+}
+
+function once(arr, fn) {
+    return arr.filter(fn).length === 1;
+}
+
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    equals(other) {
+        return this.x === other.x && this.y === other.y;
+    }
+}
+
+class Edge {
+    constructor(a, b) {
+        this.a = a;
+        this.b = b;
+        this.w = Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+    }
+
+    equals(other) {
+        if (this.a.equals(other.a) && this.b.equals(other.b)) {
+            return true;
+        } else if (this.a.equals(other.b) && this.b.equals(other.a)) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class Triangle {
+    constructor(a, b, c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.edges = [new Edge(a, b), new Edge(b, c), new Edge(c, a)];
+    }
+
+    *points() {
+        yield this.a;
+        yield this.b;
+        yield this.c;
+    }
+
+    isCounterClockwise() {
+        return (this.b.x - this.a.x)*(this.c.y - this.a.y)-(this.c.x - this.a.x)*(this.b.y - this.a.y) > 0;
+    }
+
+    // Returns is a point d is inside the triangle defined by this.a, this.b, this.c.
+    circumcircleContains(d) {
+        const ax_ = this.a.x - d.x;
+        const ay_ = this.a.y - d.y;
+        const bx_ = this.b.x - d.x;
+        const by_ = this.b.y - d.y;
+        const cx_ = this.c.x - d.x;
+        const cy_ = this.c.y - d.y;
+        const det = (
+            (ax_*ax_ + ay_*ay_) * (bx_*cy_ - cx_*by_) -
+            (bx_*bx_ + by_*by_) * (ax_*cy_ - cx_*ay_) +
+            (cx_*cx_ + cy_*cy_) * (ax_*by_ - bx_*ay_)
+        )
+        if (this.isCounterClockwise()) {
+            return det > 0;
+        }
+        return det < 0;
+    }
+
+    containsEdge(e) {
+        for (let edge of this.edges) {
+            if (edge.equals(e)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    sharesPoint(t) {
+        for (let point of t.points()) {
+            if (this.a.equals(point) || this.b.equals(point) || this.c.equals(point)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    occurencesOf(edge) {
+        let count = 0;
+
+    }
+
+    equals(other) {
+        if (this.a.equals(other.a) && this.b.equals(other.b) && this.c.equals(other.c)) {
+            return true;
+        } else if (this.a.equals(other.a) && this.b.equals(other.c) && this.c.equals(other.b)) {
+            return true;
+        } else if (this.a.equals(other.b) && this.b.equals(other.a) && this.c.equals(other.c)) {
+            return true;
+        } else if (this.a.equals(other.b) && this.b.equals(other.c) && this.c.equals(other.a)) {
+            return true;
+        } else if (this.a.equals(other.c) && this.b.equals(other.a) && this.c.equals(other.b)) {
+            return true;
+        } else if (this.a.equals(other.c) && this.b.equals(other.b) && this.c.equals(other.a)) {
+            return true;
+        }
+        return false;
     }
 }
