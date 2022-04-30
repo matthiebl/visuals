@@ -28,19 +28,18 @@ function setup(nv=30) {
     for (let i = 0; i < nV; i++) {
         let x = random(r + 5, width - (r + 5));
         let y = random(r + 5, height - (r + 5));
-        if (select('#round').checked()) {
-            while (dist(width/2, height/2, x, y) > min(width, height)/2 || points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
-                x = random(r + 5, width - (r + 5));
-                y = random(r + 5, height - (r + 5));
-            }
-        } else {
-            while (points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
-                x = random(r + 5, width - (r + 5));
-                y = random(r + 5, height - (r + 5));
+        let safeguard = 0;
+        while ((select('#round').checked() && dist(width/2, height/2, x, y) > min(width, height)/2) || points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
+            x = random(r + 5, width - (r + 5));
+            y = random(r + 5, height - (r + 5));
+            safeguard++;
+            if (safeguard > 100) {
+                break;
             }
         }
-
-        points.push(new Point(x, y));
+        if (!((select('#round').checked() && dist(width/2, height/2, x, y) > min(width, height)/2) || points.some(p => dist(p.x, p.y, x, y) < 2 * r))) {
+            points.push(new Point(x, y));
+        }
     }
 }
 
@@ -134,12 +133,11 @@ function draw() {
     if (i >= nV) {
         badTriangles = [];
         triCopy = tri.slice();
-        for (let triangle of triCopy) {// done inserting points, now clean up
+        for (let triangle of triCopy) {
             if (triangle.sharesPoint(superTriangle)) {
                 tri.splice(tri.indexOf(triangle), 1);
             }
         }
-        i++;
     } else {
         drawCurrs = true;
     }
@@ -149,6 +147,9 @@ function draw() {
     // Draw the edges of the graph.
     stroke(255);
     for (let triangle of tri) {
+        if (triangle.sharesPoint(superTriangle)) {
+            continue;
+        }
         for (let edge of triangle.edges) {
             strokeWeight(1);
             line(edge.a.x, edge.a.y, edge.b.x, edge.b.y);
@@ -156,16 +157,19 @@ function draw() {
     }
 
     // Draw the triangles being removed.
-    stroke(255, 0, 0);
-    for (let triangle of badTriangles) {
-        for (let edge of triangle.edges) {
-            strokeWeight(1);
-            line(edge.a.x, edge.a.y, edge.b.x, edge.b.y);
+    if (select('#detailed').checked()) {
+        stroke(255, 0, 0);
+        for (let triangle of badTriangles) {
+            for (let edge of triangle.edges) {
+                strokeWeight(1);
+                line(edge.a.x, edge.a.y, edge.b.x, edge.b.y);
+            }
         }
     }
 
     // Draw the points of the graph.
-    for (let { x, y } of points) {
+    for (let j = 0; j < (select('#allPoints').checked() ? nV : i); j++) {
+        let { x, y } = points[j];
         stroke(255);
         strokeWeight(r);
         point(x, y);
