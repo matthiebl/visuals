@@ -8,17 +8,22 @@ let badTriangles;
 let superTriangle;
 let i;
 
-function setup(nv=4) {
+function setup(nv=30) {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
     cnv.parent('sketch');
+
+    background(0);
+    frameRate(60);
 
     nV = nv;
     r = width / 75;
     
-    i = 0;
     tri = [];
+    badTriangles = [];
     superTriangle = new Triangle(new Point(width/2, -height), new Point(2*width, height), new Point(-width, height));
     tri.push(superTriangle);
+    i = 0;
+
     points = [];
     for (let i = 0; i < nV; i++) {
         let x = random(r + 5, width - (r + 5));
@@ -30,7 +35,6 @@ function setup(nv=4) {
 
         points.push(new Point(x, y));
     }
-
 }
 
 function once(arr, fn) {
@@ -41,8 +45,7 @@ function step() {
     if (i >= nV) {
         return;
     }
-    console.log("Working on point", i, points[i]);
-    let point = points[i]; 
+    let point = points[i];
     badTriangles = [];
     for (let triangle of tri) { // first find all the triangles that are no longer valid due to the insertion
         if (i !== 0 && triangle.equals(superTriangle)) {
@@ -70,63 +73,73 @@ function step() {
     i++;
 }
 
-function BowyerWatson(pointList) {
+function BowyerWatson() {
     // pointList is a set of coordinates defining the points to be triangulated
-    let triangulation = [];
-    let superTriangle = new Triangle(new Point(width/2, -height), new Point(2*width, height), new Point(-width, height));
-    triangulation.push(superTriangle);
-    for (let point of pointList) { // add all the points one at a time to the triangulation
-        let badTriangles = [];
-        for (let triangle of triangulation) { // first find all the triangles that are no longer valid due to the insertion
+    for (let point of points) {
+        let bads = [];
+        for (let triangle of tri) { // first find all the triangles that are no longer valid due to the insertion
+            if (i !== 0 && triangle.equals(superTriangle)) {
+                continue;
+            }
             if (triangle.circumcircleContains(point)) {
-                badTriangles.push(triangle);
+                console.log()
+                bads.push(triangle);
             }
         }        
         let polygon = [];
-        for (let triangle of badTriangles) { // find the boundary of the polygonal hole
+        for (let triangle of bads) { // find the boundary of the polygonal hole
             for (let edge of triangle.edges) {
-                if (!badTriangles.some(t => t != triangle && t.sharesEdge(edge))) {
+                if (once(bads, t => t.containsEdge(edge))) {
                     polygon.push(edge);
                 }
             }
         }
+        for (let triangle of bads) {
+            tri.splice(tri.indexOf(triangle), 1);
+        }
         for (let edge of polygon) {// re-triangulate the polygonal hole
-            newTri = new Triangle(edge.a, edge.b, point);
-            triangulation.push(newTri);
+            tri.push(new Triangle(new Point(edge.a.x, edge.a.y), new Point(edge.b.x, edge.b.y), new Point(point.x, point.y)));
         }
     }
-    let triCopy = triangulation.slice();
+    triCopy = tri.slice();
     for (let triangle of triCopy) {// done inserting points, now clean up
         if (triangle.sharesPoint(superTriangle)) {
-            triangulation.splice(triangulation.indexOf(triangle), 1);
+            tri.splice(tri.indexOf(triangle), 1);
         }
     }
-    return triangulation
 }
 
 function draw() {
-    background(0);
-    badTriangles = [];
+    let drawCurrs = false;
     let rawSpeed = select('#speed').value();
     if (rawSpeed === 0) {
         frameRate(60);
+    } else if (rawSpeed === 100) {
+        badTriangles = [];
+        frameRate(60);
+        BowyerWatson();
+        i = nV;
     } else {
-        let solveSpeed = map(rawSpeed, 0, 100, 7, 2.5) ** 4;
+        let solveSpeed = map(rawSpeed, 0, 100, 0.8, 4) ** 3;
         frameRate(solveSpeed);
         step();
     }
-    if (i === nV) {
-        console.log("Removing super triangle");
+    if (i >= nV) {
+        badTriangles = [];
         triCopy = tri.slice();
-        for (let triangle of tri) {// done inserting points, now clean up
+        for (let triangle of triCopy) {// done inserting points, now clean up
             if (triangle.sharesPoint(superTriangle)) {
-                triCopy.splice(triCopy.indexOf(triangle), 1);
+                tri.splice(tri.indexOf(triangle), 1);
             }
         }
-        tri = triCopy;
         i++;
+    } else {
+        drawCurrs = true;
     }
+    
+    background(0);
 
+    // Draw the edges of the graph.
     stroke(255);
     for (let triangle of tri) {
         for (let edge of triangle.edges) {
@@ -134,8 +147,9 @@ function draw() {
             line(edge.a.x, edge.a.y, edge.b.x, edge.b.y);
         }
     }
-    // console.log(badTriangles);
-    stroke('red');
+
+    // Draw the triangles being removed.
+    stroke(255, 0, 0);
     for (let triangle of badTriangles) {
         for (let edge of triangle.edges) {
             strokeWeight(1);
@@ -143,9 +157,23 @@ function draw() {
         }
     }
 
+    // Draw the points of the graph.
     for (let { x, y } of points) {
         stroke(255);
         strokeWeight(r);
         point(x, y);
+    }
+    
+    // Draw current points.
+    if (drawCurrs) {
+        strokeWeight(r);
+        if (i - 1 >= 0 && i - 1 < nV) {
+            stroke(255, 0, 0);
+            point(points[i-1].x, points[i-1].y);
+        }
+        if (i < nV) {
+            stroke(255, 0, 100);
+            point(points[i].x, points[i].y);
+        }
     }
 }
