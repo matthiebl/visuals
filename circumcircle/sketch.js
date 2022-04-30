@@ -74,14 +74,6 @@ function draw() {
     if (dist(centre.x, centre.y, a.x, a.y) > width/2) {
         setup();
     }
-
-    if (select('#detailed').checked()) {
-        stroke(255);
-        strokeWeight(1);
-        line(centre.x, centre.y, a.x + (b.x - a.x) / 2, a.y + (b.y - a.y) / 2);
-        line(centre.x, centre.y, a.x + (c.x - a.x) / 2, a.y + (c.y - a.y) / 2);
-        line(centre.x, centre.y, b.x + (c.x - b.x) / 2, b.y + (c.y - b.y) / 2);
-    }
     
     // Draw edges of triangle
     stroke(0);
@@ -89,7 +81,7 @@ function draw() {
     line(a.x, a.y, b.x, b.y);
     line(b.x, b.y, c.x, c.y);
     line(c.x, c.y, a.x, a.y);
-
+    
     // Draw circumcircle
     if (circumcircleContains(mouseX, mouseY)) {
         fill(0, 255, 0, 50);
@@ -99,7 +91,16 @@ function draw() {
     strokeWeight(3);
     circle(centre.x, centre.y, 2 * dist(centre.x, centre.y, a.x, a.y));
     
+        if (select('#detailed').checked()) {
+            stroke(255, 100);
+            strokeWeight(1);
+            line(centre.x, centre.y, a.x + (b.x - a.x) / 2, a.y + (b.y - a.y) / 2);
+            line(centre.x, centre.y, a.x + (c.x - a.x) / 2, a.y + (c.y - a.y) / 2);
+            line(centre.x, centre.y, b.x + (c.x - b.x) / 2, b.y + (c.y - b.y) / 2);
+        }
+    
     // Draw points
+    stroke(0);
     strokeWeight(10);
     point(a.x, a.y);
     point(b.x, b.y);
