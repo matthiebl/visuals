@@ -19,5 +19,10 @@ html, body {
     width: 21%;
     float: left;
     padding: 2%;
-    font-size: 1vw;
+    text-align: justify;
+    font-size: min(1.7vh, 1vw);
+}
+
+button {
+    font-size: min(1.7vh, 1vw);
 }
