@@ -28,20 +28,36 @@
                 displayVal('num-vert-display', numVert.value);
                 resetSimulation();
             }
+
+            window.addEventListener('resize', function(event) {
+                windowWidth = window.innerWidth;
+                windowHeight = window.innerHeight;
+                resetSimulation();
+            });
         </script>
     </head>
 
     <body style="font-family: Arial; word-break: normal">
-        <div style="display: flex; width: 100%">
-            <div id="sketch" style="width: 75%; float: left"></div>
-            <div style="width: 21%; float: left; padding: 2%">
-                <div id="info">
+        <div id="container" style="display: flex; width: 100%">
+            <div id="sketch"></div>
+            <div id="info">
+                <div>
                     <h1>Delaunay Triangulation</h1>
                     <p>
-                        This is a visual representation of how
-                        <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank">BFS</a>
-                        and <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>
-                        traverse a graph. The two visuals represent BFS and DFS respectively.
+                        This is a representation of the
+                        <a href="https://en.wikipedia.org/wiki/Delaunay_triangulation" target="_blank">Delaunay triangulation</a>
+                        of a set of points.
+                        At each step of the simulation, a new point is added
+                        to the set of points, and the triangulation is updated.
+                        Setting the speed to minimum allows you to manually step
+                        through the simulation, and setting it to maximum skips
+                        to the final triangulation.
+                    </p>
+                    <p>
+                        This is implemented with the
+                        <a>Bowyer-Watson</a>
+                        algorithm. The purpose of this program is to be able to
+                        produce a planar graph.
                     </p>
                     <input type="checkbox" id="round" onchange="resetSimulation()" checked>Round</input>
                     <div>
