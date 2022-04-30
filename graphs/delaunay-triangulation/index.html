@@ -43,17 +43,18 @@
                         and <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>
                         traverse a graph. The two visuals represent BFS and DFS respectively.
                     </p>
-                    <button onclick="resetSimulation()">Reset</button>
-                    <br>
+                    <input type="checkbox" id="round" onchange="resetSimulation()" checked>Round</input>
                     <div>
                         <p>Speed:</p>
                         <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed">
                     </div>
                     <button onclick="stepSimulation()">Step</button>
                     <div>
-                        <p>Vertices: <span id="num-vert-display">4</span></p>
-                        <input style="width: 100%" type="range" min="3" max="300" value="4" id="numVert" onchange="updateNumVertices()">
+                        <p>Vertices: <span id="num-vert-display">30</span></p>
+                        <input style="width: 100%" type="range" min="3" max="300" value="30" id="numVert" onchange="updateNumVertices()">
                     </div>
+                    <br>
+                    <button onclick="resetSimulation()">Reset</button>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
                     <p style="text-align: right">

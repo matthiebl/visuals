@@ -28,9 +28,16 @@ function setup(nv=30) {
     for (let i = 0; i < nV; i++) {
         let x = random(r + 5, width - (r + 5));
         let y = random(r + 5, height - (r + 5));
-        while (dist(width/2, height/2, x, y) > min(width, height)/2 || points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
-            x = random(r + 5, width - (r + 5));
-            y = random(r + 5, height - (r + 5));
+        if (select('#round').checked()) {
+            while (dist(width/2, height/2, x, y) > min(width, height)/2 || points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
+                x = random(r + 5, width - (r + 5));
+                y = random(r + 5, height - (r + 5));
+            }
+        } else {
+            while (points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
+                x = random(r + 5, width - (r + 5));
+                y = random(r + 5, height - (r + 5));
+            }
         }
 
         points.push(new Point(x, y));
