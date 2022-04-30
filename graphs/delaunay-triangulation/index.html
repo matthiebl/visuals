@@ -59,7 +59,15 @@
                         algorithm. The purpose of this program is to be able to
                         produce a planar graph.
                     </p>
-                    <input type="checkbox" id="round" onchange="resetSimulation()" checked>Round</input>
+                    <p>
+                        The red dot and triangles are the corresponding elements
+                        being updated in the current step. The pink dot is the
+                        next point to be added to the set of points. The edges
+                        moving off the screen are connected to the super triangle.
+                    </p>
+                    <input type="checkbox" id="round" onchange="resetSimulation()" checked> Round</input>
+                    <input type="checkbox" id="allPoints" checked> All Points</input>
+                    <input type="checkbox" id="detailed"> Detailed</input>
                     <div>
                         <p>Speed:</p>
                         <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed">
