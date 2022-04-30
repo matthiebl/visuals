@@ -26,6 +26,14 @@ A simple ray tracer that renders a scene using a primitive ray-casting algorithm
 -- <a href="https://github.com/matthiebl/visuals/blob/master/ray-cast-render/" target="_blank">Code</a>
 
 
+## Circumcircle
+
+A simple visual that shows the circumcircle of a triangle.
+
+[Visual](https://matthiebl.github.io/visuals/circumcircle/)
+-- <a href="https://github.com/matthiebl/visuals/blob/master/circumcircle/" target="_blank">Code</a>
+
+
 ## Graph Traversal
 
 A visualisation of how BFS and DFS traverse a graph.
