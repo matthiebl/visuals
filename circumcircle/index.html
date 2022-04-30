@@ -9,26 +9,6 @@
         <link rel="stylesheet" type="text/css" href="style.css">
 
         <script src="../libraries/p5.min.js"></script>
-        <!-- <script>
-            function displayVal(id, x) {
-                document.getElementById(id).innerHTML = x;
-            }
-
-            function stepSimulation() {
-                if (speed.value == 0) {
-                    step();
-                }
-            }
-
-            function resetSimulation() {
-                setup(int(numVert.value));
-            }
-
-            function updateNumVertices() {
-                displayVal('num-vert-display', numVert.value);
-                resetSimulation();
-            }
-        </script> -->
     </head>
 
     <body style="font-family: Arial; word-break: normal">
@@ -38,22 +18,15 @@
                 <div id="info">
                     <h1>Circumcircle</h1>
                     <p>
-                        This is a visual representation of how
-                        <a href="https://en.wikipedia.org/wiki/Breadth-first_search" target="_blank">BFS</a>
-                        and <a href="https://en.wikipedia.org/wiki/Depth-first_search" target="_blank">DFS</a>
-                        traverse a graph. The two visuals represent BFS and DFS respectively.
+                        This is a really simple visual that shows the circumcircle of a triangle.
+                        It then colours the triangle depending on whether the mouse is located
+                        inside or outside the circumcircle.
                     </p>
+                    <input type="checkbox" id="detailed">
+                    <label for="detailed">Detailed?</label>
+                    <br>
+                    <br>
                     <button onclick="setup()">Reset</button>
-                    <!-- <br>
-                    <div>
-                        <p>Speed:</p>
-                        <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed">
-                    </div>
-                    <button onclick="stepSimulation()">Step</button>
-                    <div>
-                        <p>Vertices: <span id="num-vert-display">4</span></p>
-                        <input style="width: 100%" type="range" min="3" max="300" value="4" id="numVert" onchange="updateNumVertices()">
-                    </div> -->
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
                     <p style="text-align: right">
