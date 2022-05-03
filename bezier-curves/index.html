@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Bezier Curve</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <script src="../../libraries/p5.min.js"></script>
+        <script>
+            window.addEventListener('resize', function(event) {
+                windowWidth = window.innerWidth;
+                windowHeight = window.innerHeight;
+                setup();
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="sketch"></div>
+            <div id="info">
+                <div>
+                    <h1>Bezier Curve</h1>
+                    <p>
+                        This is a representation of a Bezier Curve. The
+                        animation shows how the curves are created using
+                        linear interpolation.
+                    </p>
+                    <p>
+                        Select Bezier type:
+                    </p>
+                    <input id="quad" type="radio" name="option" onchange="setup()">Quadratic</input>
+                    <br>
+                    <input id="cubic" type="radio" name="option" onchange="setup()" checked>Cubic</input>
+                    <div>
+                        <p>Speed:</p>
+                        <input style="width: 100%" type="range" min="0" max="100" value="50" id="speed">
+                    </div>
+                    <br>
+                    <button onclick="setup()">Reset</button>
+                </div>
+                <div style="position: absolute; bottom: 2%; right: 2%">
+                    <p style="text-align: right">
+                        This visual was made with p5js
+                        <br>
+                        <br>
+                        You can view my <a href="../">other visuals</a>
+                        <br>
+                        <br>
+                        Or check out the 
+                        <a href="https://github.com/matthiebl/visuals/blob/bezier-curves/" target="_blank">source code</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="sketch.js"></script>
+    </body>
+</html>
