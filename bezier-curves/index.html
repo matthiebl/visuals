@@ -35,9 +35,12 @@
                     <input id="quad" type="radio" name="option" onchange="setup()">Quadratic</input>
                     <br>
                     <input id="cubic" type="radio" name="option" onchange="setup()" checked>Cubic</input>
+                    <br>
+                    <br>
+                    <button onclick="showBezier()">Draw</button>
                     <div>
                         <p>Speed:</p>
-                        <input style="width: 100%" type="range" min="0" max="100" value="50" id="speed">
+                        <input id="speed" style="width: 100%" type="range" min="0" max="100" value="50">
                     </div>
                     <br>
                     <button onclick="setup()">Reset</button>
