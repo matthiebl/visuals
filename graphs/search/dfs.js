@@ -23,8 +23,10 @@ var dfs = function(p) {
             p.points.push(new Point(x, y));
         }
         p.colour = [];
+        p.pred = [];
         for (let i = 0; i < nV; i++) {
             p.colour.push(255);
+            p.pred.push(null);
         }
         
         if (p.select('#tree').checked()) {
@@ -51,13 +53,19 @@ var dfs = function(p) {
             p.currV = null;
             return;
         }
+        
         let v = p.S.pop();
+        
+        if (p.pred[v] !== null) {
+            p.colour[v] = p.colour[p.pred[v]] - 600 / p.g.getNumVertices();
+        }
+        
         p.V.add(v);
         for (let w of p.g.getNeighbours(v)) {
             if (!p.V.has(w) && !p.S.includes(w)) {
                 p.S.push(w);
-                p.colour[w] = p.colour[v] - 600 / p.g.getNumVertices();
                 p.searchEdges.add([v, w]);
+                p.pred[w] = v;
             }
         }
         p.currV = v;
