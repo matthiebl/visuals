@@ -34,6 +34,14 @@ A simple visual that shows the circumcircle of a triangle.
 -- <a href="https://github.com/matthiebl/visuals/blob/master/circumcircle/" target="_blank">Code</a>
 
 
+## Bezier Curve
+
+A simple visual of a Bézier curve.
+
+[Visual](https://matthiebl.github.io/visuals/bezier-curves/)
+-- <a href="https://github.com/matthiebl/visuals/blob/master/bezier-curves/" target="_blank">Code</a>
+
+
 ## Graph Traversal
 
 A visualisation of how BFS and DFS traverse a graph.
