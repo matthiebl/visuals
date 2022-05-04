@@ -35,9 +35,19 @@
                     <input id="quad" type="radio" name="option" onchange="setup(false)">Quadratic</input>
                     <br>
                     <input id="cubic" type="radio" name="option" onchange="setup(true)" checked>Cubic</input>
-                    <div>
-                        <p>Speed:</p>
-                        <input id="speed" style="width: 100%" type="range" min="0" max="100" value="50">
+                    <br>
+                    <br>
+                    <button onclick="play = !play">Play</button>
+                    <br>
+                    <br>
+                    <div class="slider">
+                        <span style="width: 15%">Speed</span>
+                        <input id="speed" style="flex: 1" type="range" min="0" max="100" value="50">
+                    </div>
+                    <br>
+                    <div class="slider">
+                        <span style="width: 15%">t</span>
+                        <input id="t" style="flex: 1" type="range" min="0" max="10000" value="6000">
                     </div>
                     <br>
                     <button onclick="setup(is_cubic)">Reset</button>

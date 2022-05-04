@@ -17,7 +17,9 @@ let p4;
 
 let t;
 let dir;
+
 let is_cubic;
+let play;
 
 function setup(type=true) {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
@@ -26,6 +28,7 @@ function setup(type=true) {
     setupColours();
 
     is_cubic = type;
+    play = false;
 
     t = 0;
     dir = 1;
@@ -42,6 +45,8 @@ function draw() {
     if (rawSpeed == 0) {
         speed = 0;
     }
+    let tVal = map(select('#t').value(), 0, 10000, 0, 1);
+    if (!play) t = tVal;
 
     background(backColour);
 
@@ -56,7 +61,11 @@ function draw() {
 
     showBezier();
     
-    t += speed * dir;
+    console.log(play);
+    if (play) {
+        t += speed * dir;
+        select('#t').value(map(t, 0, 1, 0, 10000));
+    }
     if (t > 1) {
         dir = -1;
     }

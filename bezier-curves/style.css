@@ -32,3 +32,9 @@ html, body {
 button {
     font-size: min(1.7vh, 1vw);
 }
+
+.slider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
