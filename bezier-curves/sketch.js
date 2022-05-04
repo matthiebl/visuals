@@ -61,7 +61,6 @@ function draw() {
 
     showBezier();
     
-    console.log(play);
     if (play) {
         t += speed * dir;
         select('#t').value(map(t, 0, 1, 0, 10000));
@@ -74,17 +73,17 @@ function draw() {
     }
 }
 
+function changePlay() { play = !play; }
+function changeDir() { dir *= -1; }
+
 function mousePressed() {
     if (dist(mouseX, mouseY, p1.x, p1.y) < r) {
         p1.drag = true;
-    }
-    if (dist(mouseX, mouseY, p2.x, p2.y) < r) {
+    } else if (dist(mouseX, mouseY, p2.x, p2.y) < r) {
         p2.drag = true;
-    }
-    if (dist(mouseX, mouseY, p3.x, p3.y) < r) {
+    } else if (dist(mouseX, mouseY, p3.x, p3.y) < r) {
         p3.drag = true;
-    }
-    if (dist(mouseX, mouseY, p4.x, p4.y) < r) {
+    } else if (dist(mouseX, mouseY, p4.x, p4.y) < r) {
         p4.drag = true;
     }
 }
