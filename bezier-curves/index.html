@@ -32,9 +32,9 @@
                     <p>
                         Select Bezier type:
                     </p>
-                    <input id="quad" type="radio" name="option" onchange="setup()">Quadratic</input>
+                    <input id="quad" type="radio" name="option" onchange="setup(false)">Quadratic</input>
                     <br>
-                    <input id="cubic" type="radio" name="option" onchange="setup()" checked>Cubic</input>
+                    <input id="cubic" type="radio" name="option" onchange="setup(true)" checked>Cubic</input>
                     <br>
                     <br>
                     <button onclick="showBezier()">Draw</button>
@@ -43,7 +43,7 @@
                         <input id="speed" style="width: 100%" type="range" min="0" max="100" value="50">
                     </div>
                     <br>
-                    <button onclick="setup()">Reset</button>
+                    <button onclick="setup(is_cubic)">Reset</button>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
                     <p style="text-align: right">
