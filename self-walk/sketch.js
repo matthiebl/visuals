@@ -4,9 +4,9 @@ let blueColour;
 let redColour;
 
 function setupColours() {
-    backColour = color(14, 26, 36)
-    blueColour = color(61, 184, 240)
-    redColour = color(243, 18, 84)
+    backColour = color(14, 26, 36);
+    blueColour = color(61, 184, 240);
+    redColour = color(243, 18, 84);
 }
 
 let n;
@@ -53,6 +53,17 @@ function setup(size=5) {
 
 function step() {
     visited[dot.x][dot.y] = true;
+
+    // let curr = dot;
+    // while (!isConnected()) {
+    //     let prev = previous[curr.x][curr.y];
+    //     visited[curr.x][curr.y] = false;
+    //     previous[curr.x][curr.y] = null;
+    //     curr = prev;
+
+    //     pathLength--;
+    // }
+    // dot = curr;
 
     // Check if the entire grid has been visited
     let allVisited = true;
@@ -139,4 +150,50 @@ function isValid(x, y) {
         return false;
     }
     return !visited[x][y];
+}
+
+function _dfsComponent(componentOf, v, id) {
+    if (visited[v.x][v.y]) return;
+    componentOf[v.x * n + v.y] = id;
+    for (let move of possibleMoves) {
+        let newX = v.x + move.dx;
+        let newY = v.y + move.dy;
+        if (isValid(newX, newY) && componentOf[newX * n + newY] === -1) {
+            _dfsComponent(componentOf, { x: newX, y: newY }, id);
+        }
+    }
+}
+
+// Returns a list with each index v contains the component id of vertex v.
+function components() {
+    let componentOf = [];
+    for (let i = 0; i < n * n; i++) {
+        componentOf[i] = -1;
+    }
+
+    let id = 0;
+    for (let v = 0; v < n * n; v++) {
+        if (componentOf[v] === -1) {
+            _dfsComponent(componentOf, { x: floor(v / n), y: v % n }, id);
+            id++;
+        }
+    }
+    return componentOf;
+}
+
+// Returns a boolean indicating if the graph is connected.
+function isConnected() {
+    let id;
+    let thing = components();
+    for (let i = 0; i < n * n; i++) {
+        if (thing[i] !== -1) {
+            id = thing[i];
+            break;
+        }
+    }
+    console.log(id, thing);
+    if (thing.every(v => (v === -1 || v === id))) {
+        return true;
+    }
+    return false;
 }
