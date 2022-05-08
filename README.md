@@ -42,6 +42,13 @@ A simple visual of a Bézier curve.
 -- <a href="https://github.com/matthiebl/visuals/blob/master/bezier-curves/" target="_blank">Code</a>
 
 
+## Self-Avoiding Walk
+
+A simple visual of a randomly produced self-avoiding walk.
+
+[Visual](https://matthiebl.github.io/visuals/self-walk/)
+-- <a href="https://github.com/matthiebl/visuals/blob/master/self-walk/" target="_blank">Code</a>
+
 ## Graph Traversal
 
 A visualisation of how BFS and DFS traverse a graph.
@@ -65,4 +72,12 @@ generating visually pleasing planar graphs. Uses the Bowyer-Watson algorithm.
 
 [Visual](https://matthiebl.github.io/visuals/graphs/delaunay-triangulation/)
 -- <a href="https://github.com/matthiebl/visuals/blob/master/graphs/delaunay-triangulation/" target="_blank">Code</a>
+
+
+## Jumping Cude Game
+
+A silly jumping cube game.
+
+[Visual](https://matthiebl.github.io/visuals/physics/jump/)
+-- <a href="https://github.com/matthiebl/visuals/blob/master/physics/jump/" target="_blank">Code</a>
 
