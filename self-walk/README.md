@@ -4,6 +4,15 @@
 
 This is a representation of a self-avoiding walk in a grid.
 
+The problem to determine the number of self-avoiding walks in a lattice
+is currently not solvable. The method I have implemented is even worse than
+a brute force solution, which in itself is very very slow.
+
+Some improvements could be made such as using a more efficient data structure,
+trying every possibility but terminating branched early if a walk will not
+be obtainable. This could include stopping when the path splits the grid into
+two parts.
+
 Try it out [here](https://matthiebl.github.io/visuals/self-walk/)!
 
 Made with p5 library for JS
