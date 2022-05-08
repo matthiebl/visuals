@@ -29,6 +29,7 @@ function setup(size=5) {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
     cnv.parent('sketch');
     
+    loop();
     setupColours();
     
     n = size;
@@ -45,35 +46,12 @@ function setup(size=5) {
             previous[i][j] = null;
         }
     }
-    console.log("Starting...");
     pathLength = 0;
 
     dot = { x: 0, y: 0 };
 }
 
-function draw() {
-    background(backColour);
-
-    translate(cellW / 2, cellH / 2);
-    
-    noFill();
-    stroke(255);
-
-    // Draw pred path
-    let curr = dot;
-    beginShape();
-    while (curr !== null) {
-        strokeWeight(min(cellW, cellH) / 7);
-        vertex(curr.x * cellW, curr.y * cellH);
-        curr = previous[curr.x][curr.y];
-    }
-    endShape();
-
-    // Draw current dot
-    stroke(blueColour);
-    strokeWeight(min(cellW, cellH) / 3);
-    point(dot.x * cellW, dot.y * cellH);
-
+function step() {
     visited[dot.x][dot.y] = true;
 
     // Check if the entire grid has been visited
@@ -120,6 +98,40 @@ function draw() {
 
         pathLength++;
     }
+}
+
+function draw() {
+    background(backColour);
+
+    translate(cellW / 2, cellH / 2);
+    
+    noFill();
+    stroke(255);
+
+    // Draw small dot at every position
+    strokeWeight(min(cellW, cellH) / 20);
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            point(i * cellW, j * cellH);
+        }
+    }
+
+    // Draw pred path
+    let curr = dot;
+    beginShape();
+    while (curr !== null) {
+        strokeWeight(min(cellW, cellH) / 7);
+        vertex(curr.x * cellW, curr.y * cellH);
+        curr = previous[curr.x][curr.y];
+    }
+    endShape();
+
+    // Draw current dot
+    stroke(blueColour);
+    strokeWeight(min(cellW, cellH) / 3);
+    point(dot.x * cellW, dot.y * cellH);
+
+    step();
 }
 
 function isValid(x, y) {
