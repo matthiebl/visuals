@@ -5,7 +5,7 @@ var bfs = function(p) {
         var cnv1 = p.createCanvas(0.375 * p.windowWidth, p.windowHeight);
         cnv1.parent('bfs-sketch');
         
-        p.background(0);
+        p.background(14, 26, 36);
         p.g = new Graph(nV);
         
         // Create some dummy vertices
@@ -81,7 +81,7 @@ var bfs = function(p) {
             p.step();
         }
 
-        p.background(0);
+        p.background(14, 26, 36);
         
         p.noFill();
         p.stroke(255);
@@ -96,7 +96,7 @@ var bfs = function(p) {
         }
 
         // Draw the edges that have been searched
-        p.stroke(0, 0, 255);
+        p.stroke(61, 184, 240);
         p.strokeWeight(p.min(6, p.r / 2.5));
         for (let [v, w] of p.searchEdges) {
             p.line(p.points[v].x, p.points[v].y, p.points[w].x, p.points[w].y);
