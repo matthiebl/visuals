@@ -10,10 +10,15 @@
 
         <script src="../libraries/p5.min.js"></script>
         <script>
+            function updateSize() {
+                document.getElementById('sizeDisplay').innerHTML = size.value;
+                setup(size.value);
+            }
+
             window.addEventListener('resize', function(event) {
                 windowWidth = window.innerWidth;
                 windowHeight = window.innerHeight;
-                setup();
+                setup(size.value);
             });
         </script>
     </head>
@@ -28,7 +33,13 @@
                         This is a representation of a self-avoiding walk in a
                         grid.
                     </p>
-                    <button onclick="setup(is_cubic)">Reset</button>
+                    <div class="slider">
+                        <span style="width: 15%">Size</span>
+                        <input id="size" style="flex: 1" type="range" min="3" max="15" value="5" onchange="updateSize()">
+                        <span id="sizeDisplay" style="width: 15%; text-align: right;">5</span>
+                    </div>
+                    <br>
+                    <button onclick="setup(size.value)">Reset</button>
                 </div>
                 <div style="position: absolute; bottom: 2%; right: 2%">
                     <p style="text-align: right">
