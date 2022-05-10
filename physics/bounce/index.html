@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Bouncing Ball</title>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+        <script src="../../libraries/p5.min.js"></script>
+        <script>
+            window.addEventListener('resize', function(event) {
+                windowWidth = window.innerWidth;
+                windowHeight = window.innerHeight;
+                setup(size.value);
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="sketch"></div>
+            <div id="info">
+                <div>
+                    <h1>Bouncing Ball</h1>
+                    <p>
+                        Just a ball bouncing.
+                    </p>
+                    <!-- <div class="slider">
+                        <span style="width: 15%">Size</span>
+                        <input id="size" style="flex: 1" type="range" min="3" max="15" value="5" onchange="updateSize()">
+                        <span id="sizeDisplay" style="width: 15%; text-align: right;">5</span>
+                    </div> -->
+                    <br>
+                    <button onclick="setup()">Reset</button>
+                </div>
+                <div style="position: absolute; bottom: 2%; right: 2%">
+                    <p style="text-align: right">
+                        This visual was made with p5js
+                        <br>
+                        <br>
+                        You can view my <a href="../../">other visuals</a>
+                        <br>
+                        <br>
+                        Or check out the 
+                        <a href="https://github.com/matthiebl/visuals/blob/master/physics/bounce/" target="_blank">source code</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <script src="sketch.js"></script>
+    </body>
+</html>
