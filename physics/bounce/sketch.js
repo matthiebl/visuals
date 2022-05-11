@@ -55,9 +55,11 @@ class Ball {
         fill(this.col);
         circle(this.pos.x, this.pos.y, this.radius * 2);
 
-        stroke(redColour);
-        strokeWeight(3);
-        line(this.pos.x, this.pos.y, this.pos.x + this.vel.x * deltaTime, this.pos.y + this.vel.y * deltaTime);
+        if (select('#velocity').checked()) {
+            stroke(redColour);
+            strokeWeight(3);
+            line(this.pos.x, this.pos.y, this.pos.x + this.vel.x * deltaTime, this.pos.y + this.vel.y * deltaTime);
+        }
     }
 
     update() {
