@@ -43,7 +43,7 @@ function draw() {
 class Ball {
     constructor(x, y, r, mass=1, col=blueColour) {
         this.pos = createVector(x, y);
-        this.vel = createVector(0.1, 0.2).mult();
+        this.vel = createVector(0.1, 0.2).mult(150);
         this.acc = createVector(0, 0);
         this.radius = r;
         this.mass = mass;
@@ -71,33 +71,38 @@ class Ball {
 
         let didCollide = false;
         for (let wall of walls) {
-            let intersection = lineLineIntersection(this.pos, newPos, wall.a, wall.b);
+            let intersection = rayLineIntersection(this.pos, newPos, wall.a, wall.b);
             if (intersection !== null) {
                 stroke(redColour);
                 strokeWeight(10);
                 point(intersection.x, intersection.y);
 
-                let distanceToWall = this.pos.dist(intersection);
-                if (distanceToWall < this.radius) {
-                    console.log('collision');
-                }
-            }
-            if (this.distToWall(wall, newPos) < this.radius) {
-                // Find the new velocity after the collision
-                let reflectedVel = this.reflectedVelocityAfterCollision(wall, newVel);
+                // We know the ball may eventually run into the current wall.
+                // So check the distances to the wall now and after the next step.
 
-                // Set resulting velocity to new reflected velocity
-                this.vel = reflectedVel;
-                
-                // Find the proportion t of the velocity that is radius away from the wall
-                
-                // The new position is pos + newVel * t + reflectedVel * (1 - t)
-                // The new velocity is reflectedVel
-                
-                
-                // console.log(degrees(angle), degrees(newVel.heading()), degrees(reflectedVel.heading()));
-                didCollide = true;
-                break;
+                let distToWallBefore = this.distToWall(wall, this.pos);
+                let distToWallAfter  = this.distToWall(wall, newPos);
+
+                    // The ball is currently colliding with the wall.
+                if (distToWallBefore <= this.radius ||
+                    // The ball will intersect on the next step.
+                    distToWallAfter <= this.radius ||
+                    // The ball intersected somewhere between the current and next step.
+                    segmentLineIntersection(this.pos, newPos, wall.a, wall.b))
+                {
+                    // Find the new velocity after the collision
+                    let reflectedVel = this.reflectedVelocityAfterCollision(wall, newVel);
+
+                    // Set resulting velocity to new reflected velocity
+                    this.vel = reflectedVel;
+                    
+                    // Find the proportion t of the velocity that is radius away from the wall
+                    
+                    // The new position is pos + newVel * t + reflectedVel * (1 - t)
+                    // The new velocity is reflectedVel
+                    didCollide = true;
+                    break;
+                }
             }
         }
 
@@ -156,18 +161,19 @@ class Wall {
     }
 }
 
-function lineLineIntersection(v1, v2, w1, w2) {
-    // Finds the point of intersection between the two line segments
-    // v1-v2 and w1-w2. If no point of intersection, returns null,
+function rayLineIntersection(r1, r2, l1, l2) {
+    // Finds the point of intersection between a ray from r1 towards r2,
+    // and a line defined by the points l1 and l2.
+    // If no point of intersection, returns null,
     // otherwise returns the point of intersection.
-    const x1 = v1.x;
-    const y1 = v1.y;
-    const x2 = v2.x;
-    const y2 = v2.y;
-    const x3 = w1.x;
-    const y3 = w1.y;
-    const x4 = w2.x;
-    const y4 = w2.y;
+    const x1 = r1.x;
+    const y1 = r1.y;
+    const x2 = r2.x;
+    const y2 = r2.y;
+    const x3 = l1.x;
+    const y3 = l1.y;
+    const x4 = l2.x;
+    const y4 = l2.y;
 
     const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
     if (denom == 0) {
@@ -178,6 +184,35 @@ function lineLineIntersection(v1, v2, w1, w2) {
     const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
 
     if (t >= 0) {
+        return createVector(x1 + t * (x2 - x1), y1 + t * (y2 - y1));
+    }
+
+    return null;
+}
+
+function segmentLineIntersection(s1, s2, l1, l2) {
+    // Finds the point of intersection between a segment from s1 to s2,
+    // and a line defined by the points l1 and l2.
+    // If no point of intersection, returns null,
+    // otherwise returns the point of intersection.
+    const x1 = s1.x;
+    const y1 = s1.y;
+    const x2 = s2.x;
+    const y2 = s2.y;
+    const x3 = l1.x;
+    const y3 = l1.y;
+    const x4 = l2.x;
+    const y4 = l2.y;
+
+    const denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+    if (denom == 0) {
+        return null;
+    }
+
+    const t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom;
+    const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom;
+
+    if (0 <= t && t <= 1) {
         return createVector(x1 + t * (x2 - x1), y1 + t * (y2 - y1));
     }
 
