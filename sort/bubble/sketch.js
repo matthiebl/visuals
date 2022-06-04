@@ -16,8 +16,6 @@ let i;
 let thisStyle;
 
 function setup() {
-    loop();
-
     var cnv = createCanvas(windowWidth * 0.6, 400);
     cnv.parent('canvas');
     
@@ -75,13 +73,11 @@ function draw() {
             }
         }
         i++;
-    } else {
-        if (thisStyle === 'height') line(i - items.length, height, i - items.length, height - items[i - items.length]);
-        else if (thisStyle === 'colour') line(i - items.length, height, i - items.length, 0);
-        
-        if (i === 2 * items.length) {
-            noLoop();
-        }
+    } else if (i < 2 * items.length) {
+        let trueI = i - items.length;
+        if (thisStyle === 'height') line(trueI, height, trueI, height - items[trueI]);
+        else if (thisStyle === 'colour') line(trueI, height, trueI, 0);
+
         i += 5;
     }
 }
