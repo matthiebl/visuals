@@ -14,40 +14,55 @@
     <div class="flex-row flex-centered back-black">
       <div id="canvas"></div>
     </div>
-    <div id="info" class="container-padded">
-      <h1>Insertion Sort</h1>
+    <div class="sidebar">
+      <div class="info-box">
+        <h1>Insertion Sort</h1>
 
-      <p>
-        Insertion sort is a simple sorting algorithm that works by moving the next item into its correct position in a sorted subarray seen to the left.
-      </p>
-      <p>
-        It simply takes the next item and swaps it backwards until it is sorted into the subarray. This makes insertion sort useful for mostly sorted data as it is adaptive due to only needing to move each element as far as necessary.
-      </p>
-      <p>
-        Insertion sort is a slow sorting algorithm due to needing up to n swaps to move each n elements into the sorted subarray. Thus the time complexity is O(n^2).
-      </p>
-      <p>
-        The red line represents the partition between the sorted subarray and the rest of the unsorted elements.
-      </p>
+        <p>
+          Insertion sort is a simple sorting algorithm that works by moving the next item into its correct position in a sorted subarray seen to the left.
+        </p>
+        <p>
+          It simply takes the next item and swaps it backwards until it is sorted into the subarray. This makes insertion sort useful for mostly sorted data as it is adaptive due to only needing to move each element as far as necessary.
+        </p>
+        <p>
+          Insertion sort is a slow sorting algorithm due to needing up to n swaps to move each n elements into the sorted subarray. Thus the time complexity is O(n^2).
+        </p>
+        <p>
+          The red line represents the partition between the sorted subarray and the rest of the unsorted elements.
+        </p>
 
-      <div class="slider">
-        <span class="slider-title">Speed</span>
-        <input id="speed" class="slider-slide" type="range" min="1" max="10" value="5" onchange="updateSlider(this)">
-        <span id="speedDisplay" class="slider-value">5</span>
-      </div>
+        <div class="slider">
+          <span class="slider-title">Speed</span>
+          <input id="speed" class="slider-slide" type="range" min="1" max="10" value="5" onchange="updateSlider(this)">
+          <span id="speedDisplay" class="slider-value">5</span>
+        </div>
 
-      <b>
-        Sorting Visualisation:
-      </b>
-      <div class="radio">
-        <input id="height" type="radio" name="visual" value="height" checked/>
-        <label for="height">Height</label>
+        <b>
+          Sorting Visualisation:
+        </b>
+        <div class="radio">
+          <input id="height" type="radio" name="visual" value="height" checked/>
+          <label for="height">Height</label>
+        </div>
+        <div class="radio">
+          <input id="colour" type="radio" name="visual" value="colour" />
+          <label for="colour">Colour</label>
+        </div>
+        <button onclick="setup()">Reset</button>
       </div>
-      <div class="radio">
-        <input id="colour" type="radio" name="visual" value="colour" />
-        <label for="colour">Colour</label>
+      
+      <div class="link-box">
+        <p>
+          This visual was made with p5js
+        </p>
+        <p>
+          You can view my <a href="../../">other visuals</a>
+        </p>
+        <p>
+          Or check out the 
+          <a href="https://github.com/matthiebl/visuals/blob/master/sort/insertion/" target="_blank">source code</a>
+        </p>
       </div>
-      <button onclick="setup()">Reset</button>
     </div>
 
     <script src="sketch.js"></script>
