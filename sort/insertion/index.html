@@ -1,58 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Insertion Sort</title>
 
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="stylesheet" type="text/css" href="../style.css">
 
     <script src="../../libraries/p5.min.js"></script>
-    <style type="text/css">
-      body {
-        margin: 0;
-        min-height: 100vh;
-
-        font-family: Arial;
-
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-        grid-template-rows: 1fr;
-      }
-      .container {
-        width: 100%;
-        height: 100%;
-        max-width: 75vw;
-        
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #info {
-        width: auto;
-        height: auto;
-        max-width: 25vw;
-        margin: 1.5rem;
-        
-        overflow: clip;
-      }
-      h1 {
-        margin: 0;
-      }
-      .radio {
-        margin-top: 0.25rem;
-      }
-      button {
-        margin: 0.25rem 0;
-      }
-    </style>
   </head>
-  <body>
-    <div class="container" style="background: #000">
+  <body class="grid three-one">
+    <div class="flex-row flex-centered back-black">
       <div id="canvas"></div>
     </div>
-    <div id="info">
+    <div id="info" class="container-padded">
       <h1>Insertion Sort</h1>
 
       <p>
@@ -67,10 +29,16 @@
       <p>
         The red line represents the partition between the sorted subarray and the rest of the unsorted elements.
       </p>
+
+      <div class="slider">
+        <span class="slider-title">Speed</span>
+        <input id="speed" class="slider-slide" type="range" min="1" max="10" value="5" onchange="updateSlider(this)">
+        <span id="speedDisplay" class="slider-value">5</span>
+      </div>
+
       <b>
         Sorting Visualisation:
       </b>
-
       <div class="radio">
         <input id="height" type="radio" name="visual" value="height" checked/>
         <label for="height">Height</label>
@@ -83,5 +51,18 @@
     </div>
 
     <script src="sketch.js"></script>
+    <script>
+      function updateSlider(slider) {
+        const display = document.getElementById(slider.id + 'Display')
+        display.innerHTML = slider.value;
+        setup();
+      }
+
+      window.addEventListener('resize', function(event) {
+        windowWidth = window.innerWidth;
+        windowHeight = window.innerHeight;
+        setup();
+      });
+  </script>
   </body>
 </html>
