@@ -11,7 +11,7 @@
 
 body {
     width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -48,22 +48,20 @@ button {
 
 .slider {
     display: flex;
+    gap: 1rem;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
+    justify-content: space-between;
 
     margin: 0.75rem 0;
 }
 
-.slider-title {
-    width: 15%;
-}
-
 .slider-slide {
-    flex: 1;
+    flex-grow: 1;
 }
 
 .slider-value {
-    width: 15%;
     text-align: right;
 }
 
@@ -103,4 +101,14 @@ button {
 
 .back-black {
     background-color: black;
+}
+
+@media (max-height: 700px), (max-width: 1250px) {
+    .info-box p {
+        display: none;
+    }
+
+    .slider {
+        flex-direction: column;
+    }
 }
