@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Selection Sort</title>
+
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+
+    <script src="../../libraries/p5.min.js"></script>
+    <style type="text/css">
+      body {
+        margin: 0;
+        min-height: 100vh;
+
+        font-family: Arial;
+
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: 1fr;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        max-width: 75vw;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #info {
+        width: auto;
+        height: auto;
+        max-width: 25vw;
+        margin: 1.5rem;
+        
+        overflow: clip;
+      }
+      h1 {
+        margin: 0;
+      }
+      .radio {
+        margin-top: 0.25rem;
+      }
+      button {
+        margin: 0.25rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="background: #000">
+      <div id="canvas"></div>
+    </div>
+    <div id="info">
+      <h1>Selection Sort</h1>
+
+      <p>
+        Selection sort is a simple sorting algorithm that works by iterating over the elements and selecting the correct element for each position. Once it is found, it is swapped with the current position.
+      </p>
+      <p>
+        It simply starts from the left and selects the smallest element and moves it to the correct place. It then moves to the next position and repeats this process until all the elements are in the correct position.
+      </p>
+      <p>
+        Selection sort is a very slow sort algorithm due to needing n comparisons to select the correct element for each n positions. Thus the time complexity is O(n^2).
+      </p>
+      <p>
+        The red line represents the position where the next smallest element is to be placed.
+      </p>
+      <b>
+        Sorting Visualisation:
+      </b>
+
+      <div class="radio">
+        <input id="height" type="radio" name="visual" value="height" onchange="setup()" checked/>
+        <label for="height">Height</label>
+      </div>
+      <div class="radio">
+        <input id="colour" type="radio" name="visual" value="colour" onchange="setup()" />
+        <label for="colour">Colour</label>
+      </div>
+      <button onclick="setup()">Reset</button>
+    </div>
+
+    <script src="sketch.js"></script>
+  </body>
+</html>
