@@ -9,33 +9,18 @@ function setupColours() {
     redColour = color(243, 18, 84)
 }
 
-let thisStyle;
-
-let items;
-
 let i;
+let items;
 
 function setup() {
     var cnv = createCanvas(windowWidth * 0.6, 400);
     cnv.parent('canvas');
     
     setupColours();
-    
-    const allStyles = document.getElementsByName('visual');
-    for (const style of allStyles) {
-        console.log(style.ariaValueText);
-        if (style.checked) {
-            thisStyle = style.value;
-        }
-    }
 
     items = [];
     for (let i = 0; i < width; i++) {
-        if (thisStyle === 'height') {
-            items[i] = random(height);
-        } else if (thisStyle === 'colour') {
-            items[i] = random(0, 255);
-        }
+        items[i] = random(height);
     }
 
     i = 0;
@@ -43,6 +28,16 @@ function setup() {
 
 function draw() {
     background(0);
+
+    // Determine the style to display the items
+    const allStyles = document.getElementsByName('visual');
+    let thisStyle;
+    for (const style of allStyles) {
+        console.log(style.ariaValueText);
+        if (style.checked) {
+            thisStyle = style.value;
+        }
+    }
     
     // Draw the items being sorted.
     strokeWeight(1);
@@ -52,8 +47,8 @@ function draw() {
             stroke('#fff');
             line(i, height, i, height - it);
         } else if (thisStyle === 'colour') {
-            colorMode(HSB, 255);
-            stroke(it, 255, 255);
+            colorMode(HSB, height);
+            stroke(it, height, height);
             line(i, height, i, 0);
         }
     }
