@@ -9,11 +9,11 @@ function setupColours() {
     redColour = color(243, 18, 84)
 }
 
-let i;
+let i, j;
 let items;
 
 function setup() {
-    var cnv = createCanvas(windowWidth * 0.6, 400);
+    var cnv = createCanvas(windowWidth * 0.6, min(windowHeight * 0.4, 400));
     cnv.parent('canvas');
     
     setupColours();
@@ -23,7 +23,7 @@ function setup() {
         items[i] = random(height);
     }
 
-    i = 0;
+    i = j = 0;
 }
 
 function draw() {
@@ -33,7 +33,6 @@ function draw() {
     const allStyles = document.getElementsByName('visual');
     let thisStyle;
     for (const style of allStyles) {
-        console.log(style.ariaValueText);
         if (style.checked) {
             thisStyle = style.value;
         }
@@ -58,26 +57,38 @@ function draw() {
     strokeWeight(3);
     if (thisStyle === 'height') stroke(redColour);
     else if (thisStyle === 'colour') stroke('#fff');
-    if (i < items.length) {
-        line(i, 0, i, height);
-        // Once at the next item, insert it into its correct position to the left
-        for (let j = i; j > 0; j--) {
+    line(i, 0, i, height);
+    
+    const speed = document.getElementById('speed').value ** 2;
+    for (let loopCount = 0; loopCount < speed; loopCount++) {
+        if (j <= 0) {
+            i++;
+            j = i;
+        } else {
+            if (speed < 10) {
+                strokeWeight(1);
+                if (thisStyle === 'height') line(j, height, j, height - items[j]);
+                else if (thisStyle === 'colour') line(j, height, j, 0);
+            }
+            
+            // Once at the next item, insert it into its correct position to the left
             if (items[j] < items[j - 1]) {
                 const temp = items[j];
                 items[j] = items[j - 1];
                 items[j - 1] = temp;
             } else {
                 // If the item is in the correct order, no point in continuing
-                break;
+                j = 0;
             }
+            j--;
         }
-        
-        i++;
-    } else if (i < 2 * items.length) {
+    }
+
+    if (items.length <= i && i < 2 * items.length) {
         let trueI = i - items.length;
         if (thisStyle === 'height') line(trueI, height, trueI, height - items[trueI]);
         else if (thisStyle === 'colour') line(trueI, height, trueI, 0);
 
-        i += 5;
+        i += 7;
     }
 }
