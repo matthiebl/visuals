@@ -33,8 +33,8 @@
 
         <div class="slider">
           <span class="slider-title">Speed</span>
-          <input id="speed" class="slider-slide" type="range" min="1" max="10" value="5" onchange="updateSlider(this)">
-          <span id="speedDisplay" class="slider-value">5</span>
+          <input id="speed" class="slider-slide" type="range" min="1" max="20" value="10" onchange="updateSlider(this)">
+          <span id="speedDisplay" class="slider-value">10</span>
         </div>
 
         <b>
@@ -70,7 +70,6 @@
       function updateSlider(slider) {
         const display = document.getElementById(slider.id + 'Display')
         display.innerHTML = slider.value;
-        setup();
       }
 
       window.addEventListener('resize', function(event) {
