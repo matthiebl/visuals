@@ -17,7 +17,7 @@
       <a id="burger" class="navbar">&#9776;</a>
     </nav>
 
-    <div class="flex-row">
+    <div id="visual-container">
       <div id="canvas-container" class="flex-row flex-centered back-colour">
         <div id="canvas"></div>
       </div>
@@ -55,13 +55,11 @@
           <p>
             The red line represents the partition between the sorted subarray and the rest of the unsorted elements.
           </p>
-  
-          <a id="extra-info" href="https://en.wikipedia.org/wiki/Insertion_sort" target="_blank">[ More Information ]</a>
         </div>
         
         <div class="link-box">
-          <a class="flex-box flex-centered" onclick="setup()">Reset</a>
-          <a class="flex-box flex-centered" href="https://github.com/matthiebl/visuals/blob/master/sort/insertion/" target="_blank">Source Code</a>
+          <a id="reset" class="flex-box flex-centered" onclick="setup()">Reset</a>
+          <a id="source" class="flex-box flex-centered" href="https://github.com/matthiebl/visuals/blob/master/sort/insertion/" target="_blank">Source Code</a>
         </div>
       </div>
     </div>
@@ -80,10 +78,8 @@
         // console.log(windowWidth * 0.2 * windowHeight);
         if (windowWidth * 0.2 * windowHeight < 350000) {
           document.getElementById('info').classList.add('closed');
-          document.getElementById('extra-info').classList.remove('closed');
         } else {
           document.getElementById('info').classList.remove('closed');
-          document.getElementById('extra-info').classList.add('closed');
         }
 
         setup();
