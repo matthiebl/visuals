@@ -65,6 +65,9 @@ function draw() {
     
     const speed = document.getElementById('speed').value ** 2;
     for (let loopCount = 0; loopCount < speed; loopCount++) {
+        if (i >= items.length) {
+            break;
+        }
         if (j <= 0) {
             i++;
             j = i;
