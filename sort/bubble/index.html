@@ -1,87 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Bubble Sort</title>
 
-    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="stylesheet" type="text/css" href="../style.css">
 
     <script src="../../libraries/p5.min.js"></script>
-    <style type="text/css">
-      body {
-        margin: 0;
-        min-height: 100vh;
-
-        font-family: Arial;
-
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-        grid-template-rows: 1fr;
-      }
-      .container {
-        width: 100%;
-        height: 100%;
-        max-width: 75vw;
-        
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #info {
-        width: auto;
-        height: auto;
-        max-width: 25vw;
-        margin: 1.5rem;
-        
-        overflow: clip;
-      }
-      h1 {
-        margin: 0;
-      }
-      .radio {
-        margin-top: 0.25rem;
-      }
-      button {
-        margin: 0.25rem 0;
-      }
-    </style>
   </head>
-  <body>
-    <div class="container" style="background: #000">
-      <div id="canvas"></div>
-    </div>
-    <div id="info">
-      <h1>Bubble Sort</h1>
+  <body onload="resizeScreen()">
+    <nav>
+      <a class="navbar arrow-back" href="../">&#10140;</a>
+      <a class="navbar heading" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a id="burger" class="navbar">&#9776;</a>
+    </nav>
 
-      <p>
-        Bubble sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements if they are in the wrong order.
-      </p>
-      <p>
-        On each pass of the array, the smallest element is moved to the left, and as such each element is bubbled down to the bottom. There is also an alternative version of bubble sort known as bubble up where the largest element is moved up to the right.
-      </p>
-      <p>
-        Bubble sort is a very slow sort algorithm due to needing n comparisons for each pass and there is up to n passes needed. Thus the time complexity is O(n^2).
-      </p>
-      <p>
-        The red line represents where the sorting algorithm is up to, so everything to the left is sorted.
-      </p>
-      <b>
-        Sorting Visualisation:
-      </b>
+    <div class="flex-row">
+      <div id="canvas-container" class="flex-row flex-centered back-colour">
+        <div id="canvas"></div>
+      </div>
+      <div id="sidebar" class>
+        <div id="info" class="info-box">
+          <h1>Bubble Sort</h1>
+          
+          <div class="slider">
+            <span class="slider-title">Speed</span>
+            <input id="speed" class="slider-slide" type="range" min="1" max="20" value="10" onchange="updateSlider(this)">
+            <span id="speedDisplay" class="slider-value">10</span>
+          </div>
+  
+          <b>
+            Sorting Visualisation:
+          </b>
+          <div class="radio">
+            <input id="height" type="radio" name="visual" value="height" checked/>
+            <label for="height">Height</label>
+          </div>
+          <div class="radio">
+            <input id="colour" type="radio" name="visual" value="colour" />
+            <label for="colour">Colour</label>
+          </div>
 
-      <div class="radio">
-        <input id="height" type="radio" name="visual" value="height" onchange="setup()" checked/>
-        <label for="height">Height</label>
+          <p>
+            Bubble sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements if they are in the wrong order.
+          </p>
+          <p>
+            On each pass of the array, the smallest element is moved to the left, and as such each element is bubbled down to the bottom. There is also an alternative version of bubble sort known as bubble up where the largest element is moved up to the right.
+          </p>
+          <p>
+            Bubble sort is a very slow sort algorithm due to needing n comparisons for each pass and there is up to n passes needed. Thus the time complexity is O(n^2).
+          </p>
+          <p>
+            The red line represents where the sorting algorithm is up to, so everything to the left is sorted.
+          </p>
+  
+          <a id="extra-info" href="https://en.wikipedia.org/wiki/Bubble_sort" target="_blank">[ More Information ]</a>
+        </div>
+        
+        <div class="link-box">
+          <a class="flex-box flex-centered" onclick="setup()">Reset</a>
+          <a class="flex-box flex-centered" href="https://github.com/matthiebl/visuals/blob/master/sort/bubble/" target="_blank">Source Code</a>
+        </div>
       </div>
-      <div class="radio">
-        <input id="colour" type="radio" name="visual" value="colour" onchange="setup()" />
-        <label for="colour">Colour</label>
-      </div>
-      <button onclick="setup()">Reset</button>
     </div>
 
     <script src="sketch.js"></script>
+    <script>
+      function updateSlider(slider) {
+        const display = document.getElementById(slider.id + 'Display')
+        display.innerHTML = slider.value;
+      }
+
+      function resizeScreen() {
+        windowWidth = window.innerWidth;
+        windowHeight = window.innerHeight;
+
+        // console.log(windowWidth * 0.2 * windowHeight);
+        if (windowWidth * 0.2 * windowHeight < 350000) {
+          document.getElementById('info').classList.add('closed');
+          document.getElementById('extra-info').classList.remove('closed');
+        } else {
+          document.getElementById('info').classList.remove('closed');
+          document.getElementById('extra-info').classList.add('closed');
+        }
+
+        setup();
+      }
+
+      window.addEventListener('resize', resizeScreen);
+
+      document.getElementById('burger').addEventListener('click', () => {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('closed');
+      });
+  </script>
   </body>
 </html>

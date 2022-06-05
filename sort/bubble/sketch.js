@@ -2,47 +2,46 @@
 let backColour;
 let blueColour;
 let redColour;
+let yellowColour;
+let greenColour;
 
 function setupColours() {
-    backColour = color(14, 26, 36)
-    blueColour = color(61, 184, 240)
-    redColour = color(243, 18, 84)
+    backColour = color(14, 26, 36);
+    blueColour = color(61, 184, 240);
+    redColour = color(243, 18, 84);
+    yellowColour = color(255, 202, 58);
+    greenColour = color(138, 201, 38);
 }
 
+let i, j;
 let items;
 
-let i;
-
-let thisStyle;
-
 function setup() {
-    var cnv = createCanvas(windowWidth * 0.6, 400);
+    var cnv = createCanvas(windowWidth * 0.6, min(windowHeight * 0.4, 400));
     cnv.parent('canvas');
     
     setupColours();
-    
+
+    items = [];
+    for (let i = 0; i < width; i++) {
+        items[i] = random(height);
+    }
+
+    i = 0;
+    j = items.length - 1;
+}
+
+function draw() {
+    background(backColour);
+
+    // Determine the style to display the items
     const allStyles = document.getElementsByName('visual');
+    let thisStyle;
     for (const style of allStyles) {
-        console.log(style.ariaValueText);
         if (style.checked) {
             thisStyle = style.value;
         }
     }
-
-    items = [];
-    for (let i = 0; i < width; i++) {
-        if (thisStyle === 'height') {
-            items[i] = random(height);
-        } else if (thisStyle === 'colour') {
-            items[i] = random(0, 255);
-        }
-    }
-
-    i = 0;
-}
-
-function draw() {
-    background(0);
     
     // Draw the items being sorted.
     strokeWeight(1);
@@ -52,32 +51,49 @@ function draw() {
             stroke('#fff');
             line(i, height, i, height - it);
         } else if (thisStyle === 'colour') {
-            colorMode(HSB, 255);
-            stroke(it, 255, 255);
+            colorMode(HSB, height);
+            stroke(it, height, height);
             line(i, height, i, 0);
         }
     }
     
-    // Bubble down one item and draw the point where the items have been sorted to.
     colorMode(RGB);
     strokeWeight(3);
     if (thisStyle === 'height') stroke(redColour);
     else if (thisStyle === 'colour') stroke('#fff');
-    if (i < items.length) {
-        line(i, 0, i, height);
-        for (let j = items.length; j >= i; j--) {
+    line(i, 0, i, height);
+    
+    const speed = map(document.getElementById('speed').value, 1, 10, 5, 20) ** 2;
+    for (let loopCount = 0; loopCount < speed; loopCount++) {
+        if (i >= items.length) {
+            break;
+        }
+        // At the end of the sweep, move back to the next item.
+        if (j <= i) {
+            i++;
+            j = items.length - 1;
+        } else {
+            if (speed < 100) {
+                strokeWeight(2);
+                if (thisStyle === 'height') line(j, height, j, height - items[j]);
+                else if (thisStyle === 'colour') line(j, height, j, 0);
+            }
+            
+            // Swap the items if they are in the wrong order
             if (items[j] < items[j - 1]) {
                 const temp = items[j];
                 items[j] = items[j - 1];
                 items[j - 1] = temp;
             }
+            j--;
         }
-        i++;
-    } else if (i < 2 * items.length) {
+    }
+
+    if (items.length <= i && i < 2 * items.length) {
         let trueI = i - items.length;
         if (thisStyle === 'height') line(trueI, height, trueI, height - items[trueI]);
         else if (thisStyle === 'colour') line(trueI, height, trueI, 0);
 
-        i += 5;
+        i += 7;
     }
 }
