@@ -10,58 +10,59 @@
 
     <script src="../../libraries/p5.min.js"></script>
   </head>
-  <body class="grid three-one">
-    <div class="flex-row flex-centered back-black">
-      <div id="canvas"></div>
-    </div>
-    <div class="sidebar">
-      <div class="info-box">
-        <h1>Insertion Sort</h1>
+  <body onload="resizeScreen()">
+    <nav>
+      <a class="navbar arrow-back" href="../">&#10140;</a>
+      <a class="navbar heading" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a id="burger" class="navbar">&#9776;</a>
+    </nav>
 
-        <p>
-          Insertion sort is a simple sorting algorithm that works by moving the next item into its correct position in a sorted subarray seen to the left.
-        </p>
-        <p>
-          It simply takes the next item and swaps it backwards until it is sorted into the subarray. This makes insertion sort useful for mostly sorted data as it is adaptive due to only needing to move each element as far as necessary.
-        </p>
-        <p>
-          Insertion sort is a slow sorting algorithm due to needing up to n swaps to move each n elements into the sorted subarray. Thus the time complexity is O(n^2).
-        </p>
-        <p>
-          The red line represents the partition between the sorted subarray and the rest of the unsorted elements.
-        </p>
-
-        <div class="slider">
-          <span class="slider-title">Speed</span>
-          <input id="speed" class="slider-slide" type="range" min="1" max="20" value="10" onchange="updateSlider(this)">
-          <span id="speedDisplay" class="slider-value">10</span>
-        </div>
-
-        <b>
-          Sorting Visualisation:
-        </b>
-        <div class="radio">
-          <input id="height" type="radio" name="visual" value="height" checked/>
-          <label for="height">Height</label>
-        </div>
-        <div class="radio">
-          <input id="colour" type="radio" name="visual" value="colour" />
-          <label for="colour">Colour</label>
-        </div>
-        <button onclick="setup()">Reset</button>
+    <div class="flex-row">
+      <div id="canvas-container" class="flex-row flex-centered back-colour">
+        <div id="canvas"></div>
       </div>
-      
-      <div class="link-box">
-        <p>
-          This visual was made with p5js
-        </p>
-        <p>
-          You can view my <a href="../../">other visuals</a>
-        </p>
-        <p>
-          Or check out the 
-          <a href="https://github.com/matthiebl/visuals/blob/master/sort/insertion/" target="_blank">source code</a>
-        </p>
+      <div id="sidebar" class>
+        <div id="info" class="info-box">
+          <h1>Insertion Sort</h1>
+          
+          <div class="slider">
+            <span class="slider-title">Speed</span>
+            <input id="speed" class="slider-slide" type="range" min="1" max="20" value="10" onchange="updateSlider(this)">
+            <span id="speedDisplay" class="slider-value">10</span>
+          </div>
+  
+          <b>
+            Sorting Visualisation:
+          </b>
+          <div class="radio">
+            <input id="height" type="radio" name="visual" value="height" checked/>
+            <label for="height">Height</label>
+          </div>
+          <div class="radio">
+            <input id="colour" type="radio" name="visual" value="colour" />
+            <label for="colour">Colour</label>
+          </div>
+
+          <p>
+            Insertion sort is a simple sorting algorithm that works by moving the next item into its correct position in a sorted subarray seen to the left.
+          </p>
+          <p>
+            It simply takes the next item and swaps it backwards until it is sorted into the subarray. This makes insertion sort useful for mostly sorted data as it is adaptive due to only needing to move each element as far as necessary.
+          </p>
+          <p>
+            Insertion sort is a slow sorting algorithm due to needing up to n swaps to move each n elements into the sorted subarray. Thus the time complexity is O(n^2).
+          </p>
+          <p>
+            The red line represents the partition between the sorted subarray and the rest of the unsorted elements.
+          </p>
+  
+          <a id="extra-info" href="https://en.wikipedia.org/wiki/Insertion_sort" target="_blank">[ More Information ]</a>
+        </div>
+        
+        <div class="link-box">
+          <a class="flex-box flex-centered" onclick="setup()">Reset</a>
+          <a class="flex-box flex-centered" href="https://github.com/matthiebl/visuals/blob/master/sort/insertion/" target="_blank">Source Code</a>
+        </div>
       </div>
     </div>
 
@@ -72,10 +73,27 @@
         display.innerHTML = slider.value;
       }
 
-      window.addEventListener('resize', function(event) {
+      function resizeScreen() {
         windowWidth = window.innerWidth;
         windowHeight = window.innerHeight;
+
+        // console.log(windowWidth * 0.2 * windowHeight);
+        if (windowWidth * 0.2 * windowHeight < 350000) {
+          document.getElementById('info').classList.add('closed');
+          document.getElementById('extra-info').classList.remove('closed');
+        } else {
+          document.getElementById('info').classList.remove('closed');
+          document.getElementById('extra-info').classList.add('closed');
+        }
+
         setup();
+      }
+
+      window.addEventListener('resize', resizeScreen);
+
+      document.getElementById('burger').addEventListener('click', () => {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('closed');
       });
   </script>
   </body>
