@@ -17,7 +17,7 @@ let i, j;
 let items;
 
 function setup() {
-    var cnv = createCanvas(windowWidth * 0.6, min(windowHeight * 0.4, 400));
+    var cnv = createCanvas(windowWidth * 0.5, min(windowHeight * 0.4, 300));
     cnv.parent('canvas');
     
     setupColours();
