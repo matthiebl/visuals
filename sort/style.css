@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
 
 * {
-    font-family: Arial;
+    font-family: 'Poppins', sans-serif;
     word-break: normal;
     overflow: hidden;
 
@@ -14,6 +15,42 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
+}
+
+nav {
+    height: 75px;
+    width: 100%;
+    background: #060b0f;
+    color: white;
+    padding: 1rem 1rem;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar {
+    font-size: 2.5rem;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.arrow-back {
+    padding: 0 0.5rem 0 0.5rem;
+    transform: rotate(180deg);
+}
+
+.heading {
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+}
+ 
+#burger {
+    padding: 0 0.5rem 0 0.5rem;
 }
 
 h1 {
@@ -32,18 +69,27 @@ button {
     margin: 0.25rem 0;
 }
 
+#canvas-container {
+    width: 100%;
+    height: calc(100vh - 75px);
+}
 
-
-.sidebar {
-    width: auto;
-    height: 100%;
-    padding: 2rem;
-    overflow: normal;
-
+#sidebar {
+    display: block;
+    width: 25vw;
+    
     display: flex;
     flex-direction: column;
-    align-items: space-between;
     justify-content: space-between;
+    align-items: stretch;
+}
+
+#sidebar.closed, #info.closed p {
+    display: none;
+}
+
+.info-box {
+    padding: 2rem 2rem 0 2rem;
 }
 
 .slider {
@@ -65,8 +111,42 @@ button {
     text-align: right;
 }
 
-.link-box p {
-    text-align: right;
+#extra-info {
+    padding: 0.5rem 0;
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+#extra-info.closed {
+    display: none;
+}
+
+.link-box {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.link-box a {
+    z-index: 5;
+    width: 100%;
+    height: 60px;
+    color: black;
+    font-size: 1.25rem;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: 0.5s;
+    
+}
+
+.link-box a:hover {
+    background-color: #f0f5f9;
+    font-size: 1.3rem;
+    letter-spacing: 0.05rem;
 }
 
 
@@ -76,8 +156,8 @@ button {
 }
 
 .three-one {
+    height: calc(100vh - 75px);
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: 100%;
 }
 
 .flex-box {
@@ -99,15 +179,11 @@ button {
     justify-content: center;
 }
 
-.back-black {
-    background-color: black;
+.back-colour {
+    background-color: #0E1A24;
 }
 
-@media (max-height: 700px), (max-width: 1250px) {
-    .info-box p {
-        display: none;
-    }
-
+@media (max-width: 1250px) {
     .slider {
         flex-direction: column;
     }
