@@ -55,7 +55,12 @@ nav {
     padding: 0 0.5rem 0 0.5rem;
 }
 
-h1 {
+.navbar-empty {
+    height: 100%;
+    aspect-ratio: 1;
+}
+
+#info h1 {
     margin: 0;
 }
 
@@ -69,6 +74,32 @@ p {
 
 button {
     margin: 0.25rem 0;
+}
+
+.main-page {
+    width: 100%;
+    height: calc(100vh - 75px);
+    padding: 2rem;
+    overflow: auto;
+}
+
+.main-item {
+    min-height: 200px;
+    background: #0b151d;
+
+    font-size: 1.5rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.main-item a {
+    text-decoration: none;
+    color: white;
 }
 
 #canvas-container {
@@ -158,9 +189,9 @@ button {
     display: grid;
 }
 
-.three-one {
-    height: calc(100vh - 75px);
-    grid-template-columns: 3fr 1fr;
+.grid-fill {
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(500px, 100%), 1fr));
 }
 
 .flex-box {
@@ -183,7 +214,13 @@ button {
 }
 
 .back-colour {
+    color: white;
     background-color: #0E1A24;
+}
+
+.fullsize {
+    width: 100%;
+    height: 100%;
 }
 
 @media (max-width: 1500px) {
