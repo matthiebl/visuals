@@ -43,7 +43,7 @@ function draw() {
 class Ball {
     constructor(x, y, r, mass=1, col=blueColour) {
         this.pos = createVector(x, y);
-        this.vel = createVector(0.1, 0.2).mult(150);
+        this.vel = createVector(0.1, 0.2).mult(100);
         this.acc = createVector(0, 0);
         this.radius = r;
         this.mass = mass;
@@ -75,9 +75,11 @@ class Ball {
         for (let wall of walls) {
             let intersection = rayLineIntersection(this.pos, newPos, wall.a, wall.b);
             if (intersection !== null) {
-                stroke(redColour);
-                strokeWeight(10);
-                point(intersection.x, intersection.y);
+                if (select('#velocity').checked()) {
+                    stroke(redColour);
+                    strokeWeight(10);
+                    point(intersection.x, intersection.y);
+                }
 
                 // We know the ball may eventually run into the current wall.
                 // So check the distances to the wall now and after the next step.
