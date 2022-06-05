@@ -59,7 +59,6 @@ function draw() {
         }
     }
     
-    // Bubble down one item and draw the point where the items have been sorted to.
     colorMode(RGB);
     strokeWeight(3);
     if (thisStyle === 'height') stroke(redColour);
