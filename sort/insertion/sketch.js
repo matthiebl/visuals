@@ -2,11 +2,15 @@
 let backColour;
 let blueColour;
 let redColour;
+let yellowColour;
+let greenColour;
 
 function setupColours() {
-    backColour = color(14, 26, 36)
-    blueColour = color(61, 184, 240)
-    redColour = color(243, 18, 84)
+    backColour = color(14, 26, 36);
+    blueColour = color(61, 184, 240);
+    redColour = color(243, 18, 84);
+    yellowColour = color(255, 202, 58);
+    greenColour = color(138, 201, 38);
 }
 
 let i, j;
@@ -27,7 +31,7 @@ function setup() {
 }
 
 function draw() {
-    background(0);
+    background(backColour);
 
     // Determine the style to display the items
     const allStyles = document.getElementsByName('visual');
@@ -66,7 +70,7 @@ function draw() {
             j = i;
         } else {
             if (speed < 10) {
-                strokeWeight(1);
+                strokeWeight(2);
                 if (thisStyle === 'height') line(j, height, j, height - items[j]);
                 else if (thisStyle === 'colour') line(j, height, j, 0);
             }
