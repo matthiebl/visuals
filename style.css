@@ -77,7 +77,6 @@ button {
     height: max-content;
     width: 100%;
     padding: 2rem;
-    padding-bottom: 8rem;
     overflow: auto;
 }
 
@@ -232,7 +231,7 @@ button {
 }
 
 @media (max-width: 1000px) {
-    body {
+    body > * {
         font-size: 80%;
     }
 
@@ -281,4 +280,8 @@ button {
 
 .allow-scroll {
     overflow-y: auto;
+}
+
+.padded-bottom {
+    padding-bottom: 8rem;
 }
