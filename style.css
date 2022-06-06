@@ -11,7 +11,7 @@
 
 body {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 75px);
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -72,20 +72,15 @@ button {
     margin: 0.25rem 0;
 }
 
-#visual-container {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-}
-
-.main-page {
-    width: 100%;
+.collection {
     height: calc(100vh - 75px);
+    width: 100%;
     padding: 2rem;
+    padding-bottom: 8rem;
     overflow: auto;
 }
 
-.main-item {
+.collection-item {
     min-height: 200px;
     background: #0b151d;
     
@@ -99,24 +94,31 @@ button {
     cursor: pointer;
 }
 
-.main-item a {
+.collection-item a {
     text-decoration: none;
     color: white;
     transition: 0.5s;
 }
 
-.main-item a:hover {
+.collection-item a:hover {
     font-size: 2rem;
 }
 
-#canvas-container {
+#visual-container {
+    height: 100%;
     width: 100%;
-    height: calc(100vh - 75px);
+    display: flex;
+    flex-direction: row;
+}
+
+#canvas-container {
+    height: 100%;
+    width: 100%;
 }
 
 #sidebar {
     display: block;
-    height: calc(100vh - 75px);
+    height: 100%;
     width: 25vw;
     overflow-y: auto;
     
@@ -157,18 +159,6 @@ button {
     text-align: right;
 }
 
-#extra-info {
-    padding: 0.5rem 0;
-    display: block;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-}
-
-#extra-info.closed {
-    display: none;
-}
-
 .link-box {
     padding-bottom: 1rem;
     display: grid;
@@ -186,7 +176,6 @@ button {
 
     cursor: pointer;
     transition: 0.5s;
-    
 }
 
 .link-box a:hover {
@@ -242,26 +231,42 @@ button {
 }
 
 @media (max-width: 1000px) {
+    body {
+        font-size: 80%;
+    }
+
     #sidebar {
         width: 40vw;
+    }
+
+    .info-box {
+        padding: 1rem 2rem 0 2rem;
     }
 }
 
 @media (max-width: 750px) {
-    body {
-        font-size: 80%;
-        padding-bottom: 5rem;
+    #visual-container {
+        flex-direction: column-reverse;
+        justify-content: start;
     }
 
-    #visual-container {
-        flex-direction: column;
+    #canvas-container {
+        height: 100%;
+        padding: 2rem;
+        justify-content: start;
     }
     
-    
-    
     #sidebar {
-        height: 100%;
-        width: auto;
+        height: max-content;
+        width: 100%;
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    .link-box {
+        width: 100%;
+        grid-template-rows: repeat(1, 1fr);
+        padding: 0;
     }
     
     .slider {
