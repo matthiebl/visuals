@@ -8,40 +8,58 @@ let badTriangles;
 let superTriangle;
 let i;
 
-function setup(nv=30) {
-    var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch');
+function setup() {
+    var cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent('visual');
+    windowResized();
 
-    background(0);
+    clear();
     frameRate(60);
 
-    nV = nv;
-    r = width / 75;
-    
-    tri = [];
-    badTriangles = [];
-    superTriangle = new Triangle(new Point(width/2, -height), new Point(2*width, height), new Point(-width, height));
-    tri.push(superTriangle);
-    i = 0;
+    restart();
+}
 
-    points = [];
-    for (let i = 0; i < nV; i++) {
-        let x = random(r + 5, width - (r + 5));
-        let y = random(r + 5, height - (r + 5));
-        let safeguard = 0;
-        while ((select('#round').checked() && dist(width/2, height/2, x, y) > min(width, height)/2) || points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
-            x = random(r + 5, width - (r + 5));
-            y = random(r + 5, height - (r + 5));
-            safeguard++;
-            if (safeguard > 100) {
-                break;
-            }
-        }
-        if (!((select('#round').checked() && dist(width/2, height/2, x, y) > min(width, height)/2) || points.some(p => dist(p.x, p.y, x, y) < 2 * r))) {
-            points.push(new Point(x, y));
-        }
+function restart() {
+  tri = [];
+  badTriangles = [];
+  superTriangle = new Triangle(new Point(width/2, -height), new Point(2*width, height), new Point(-width, height));
+  tri.push(superTriangle);
+  i = 0;
+
+  setupVertices();
+}
+
+function windowResized() {
+  const navbar = document.getElementById('navbar');
+  const visualContainer = document.getElementById('visual');
+  windowWidth = visualContainer.offsetWidth;
+  windowHeight = window.innerHeight - navbar.offsetHeight;
+  resizeCanvas(windowWidth, windowHeight, false);
+
+  restart();
+}
+
+function setupVertices() {
+  nV = select('#numVert').value();
+  r = width / 75;
+  points = [];
+  for (let i = 0; i < nV; i++) {
+    let x = random(r + 5, width - (r + 5));
+    let y = random(r + 5, height - (r + 5));
+    let safeguard = 0;
+    while ((select('#round').checked() && dist(width/2, height/2, x, y) > min(width, height)/2) || points.some(p => dist(p.x, p.y, x, y) < 2 * r)) {
+      x = random(r + 5, width - (r + 5));
+      y = random(r + 5, height - (r + 5));
+      safeguard++;
+      if (safeguard > 100) {
+        break;
+      }
     }
-    nV = points.length;
+    if (!((select('#round').checked() && dist(width/2, height/2, x, y) > min(width, height)/2) || points.some(p => dist(p.x, p.y, x, y) < 2 * r))) {
+      points.push(new Point(x, y));
+    }
+  }
+  nV = points.length;
 }
 
 function once(arr, fn) {
@@ -143,7 +161,7 @@ function draw() {
         drawCurrs = true;
     }
     
-    background(0);
+    clear();
 
     // Draw the edges of the graph.
     stroke(255);
