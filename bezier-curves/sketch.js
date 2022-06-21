@@ -21,18 +21,27 @@ let dir;
 let is_cubic;
 let play;
 
-function setup(type=true) {
-    var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch');
+function setup() {
+    var cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent('visual');
+    windowResized();
     
     setupColours();
 
-    is_cubic = type;
     play = false;
 
-    t = 0;
+    t = 0.6;
     dir = 1;
     r = 10;
+}
+
+function windowResized() {
+    const navbar = document.getElementById('navbar');
+    const visualContainer = document.getElementById('visual');
+    windowWidth = visualContainer.offsetWidth;
+    windowHeight = window.innerHeight - navbar.offsetHeight;
+    resizeCanvas(windowWidth, windowHeight, false);
+
     p1 = new Point(width / 2 - width / 4, height / 2 + height / 6);
     p2 = new Point(width / 2 - width / 5, height / 2 - height / 6);
     p3 = new Point(width / 2 + width / 5, height / 2 - height / 6);
@@ -48,7 +57,10 @@ function draw() {
     let tVal = map(select('#t').value(), 0, 10000, 0, 1);
     if (!play) t = tVal;
 
-    background(backColour);
+    const allTypes = document.getElementsByName('bezierType');
+    is_cubic = allTypes[1].checked;
+
+    clear();
 
     p1.update();
     p2.update();

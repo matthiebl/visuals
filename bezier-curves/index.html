@@ -1,72 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bezier Curve</title>
 
-        <title>Bezier Curve</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-        <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="../visual.css">
 
-        <script src="../libraries/p5.min.js"></script>
-        <script>
-            window.addEventListener('resize', function(event) {
-                windowWidth = window.innerWidth;
-                windowHeight = window.innerHeight;
-                setup();
-            });
-        </script>
-    </head>
+  <script src="../libraries/p5.min.js"></script>
+</head>
+<body class="bg-darkblue">
+  <!-- Navbar -->
+  <nav id="navbar" class="navbar sticky-top navbar-dark bg-darkblue">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand navbar-back navbar-icon m-0 px-2 fs-1 fw-bold" href="../">&#10140;</a>
+      <a class="navbar-brand m-0 fs-1 fw-bold" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a class="navbar-brand navbar-icon m-0 px-2 fs-1 fw-bold" href="#">&#8634;</a>
+    </div>
+  </nav>
 
-    <body>
-        <div id="container">
-            <div id="sketch"></div>
-            <div id="info">
-                <div>
-                    <h1>Bezier Curve</h1>
-                    <p>
-                        This is a representation of a Bezier Curve. The
-                        animation shows how the curves are created using
-                        linear interpolation.
-                    </p>
-                    <p>
-                        Select Bezier type:
-                    </p>
-                    <input id="quad" type="radio" name="option" onchange="setup(false)">Quadratic</input>
-                    <br>
-                    <input id="cubic" type="radio" name="option" onchange="setup(true)" checked>Cubic</input>
-                    <br>
-                    <br>
-                    <button onclick="changePlay()">Play</button>
-                    <button onclick="changeDir()">Reverse</button>
-                    <br>
-                    <br>
-                    <div class="slider">
-                        <span style="width: 15%">Speed</span>
-                        <input id="speed" style="flex: 1" type="range" min="0" max="100" value="50">
-                    </div>
-                    <br>
-                    <div class="slider">
-                        <span style="width: 15%">t</span>
-                        <input id="t" style="flex: 1" type="range" min="0" max="10000" value="6000">
-                    </div>
-                    <br>
-                    <button onclick="setup(is_cubic)">Reset</button>
-                </div>
-                <div style="position: absolute; bottom: 2%; right: 2%">
-                    <p style="text-align: right">
-                        This visual was made with p5js
-                        <br>
-                        <br>
-                        You can view my <a href="../">other visuals</a>
-                        <br>
-                        <br>
-                        Or check out the 
-                        <a href="https://github.com/matthiebl/visuals/blob/master/bezier-curves/" target="_blank">source code</a>
-                    </p>
-                </div>
-            </div>
+  <!-- Visual -->
+  <section>
+    <div id="visual" class="container-fluid m-0 p-0 bg-medblue" style="z-index: 5;"></div>
+  </section>
+
+  <!-- Information -->
+  <section id="info" class="container-fluid m-0 p-0 pb-3 bg-midnightblue text-white">
+    <div class="container-fluid d-flex flex-column-reverse flex-lg-row">
+      <div class="container p-3">
+        <h1>Bezier Curve</h1>
+        
+        <p>
+            This is a representation of a Bezier Curve. The
+            animation shows how the curves are created using
+            linear interpolation.
+        </p>
+      </div>
+      <div class="container p-3">
+        <h2>Settings</h2>
+        
+        <button onclick="changePlay()">Start / Stop</button>
+        <button onclick="changeDir()">Reverse</button>
+
+        <br />
+        <br />
+
+        <label for="speed" class="form-label">Speed</label>
+        <input type="range" class="form-range" min="0" max="100" value="50" id="speed">
+
+        <label for="t" class="form-label">t-val</label>
+        <input type="range" class="form-range" min="0" max="10000" value="6000" id="t">
+
+        <label>Select Bezier type:</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="bezierType" id="quad">
+          <label class="form-check-label" for="quad">
+            Quadratic
+          </label>
         </div>
-        <script src="sketch.js"></script>
-    </body>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="bezierType" id="cubic" checked>
+          <label class="form-check-label" for="cubic">
+            Cubic
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-darkblue">
+    <div class="container h-100">
+      <div class="row w-100 h-100">
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
+          <a class="lead" href="https://github.com/matthiebl/visuals/blob/master/bezier-curves/" target="_blank">Souce Code</a>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
+          <a class="lead" href="https://github.com/matthiebl/" target="_blank">Github</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <script>
+    function resizeScreen() {
+      let navbar = document.getElementById('navbar');
+      let visual = document.getElementById('visual');
+      let footer = document.getElementById('footer');
+      visual.style.height = window.innerHeight - navbar.offsetHeight + 'px';
+      footer.style.height = navbar.offsetHeight + 'px';
+    }
+    window.addEventListener('resize', resizeScreen);
+    window.onload = resizeScreen;
+  </script>
+  <script src="sketch.js"></script>
+</body>
 </html>
