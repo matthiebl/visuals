@@ -25,14 +25,18 @@ let pathLength;
 
 let dot;
 
-function setup(size=5) {
-    var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch');
+function setup() {
+    var cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent('visual');
     
-    loop();
     setupColours();
+    windowResized();
+}
+
+function reset() {
+    loop();
     
-    n = size;
+    n = select('#size').value();
     cellW = width / n;
     cellH = height / n;
     
@@ -49,6 +53,16 @@ function setup(size=5) {
     pathLength = 0;
 
     dot = { x: 0, y: 0 };
+}
+
+function windowResized() {
+  const navbar = document.getElementById('navbar');
+  const visualContainer = document.getElementById('visual');
+  windowWidth = visualContainer.offsetWidth;
+  windowHeight = window.innerHeight - navbar.offsetHeight;
+  resizeCanvas(windowWidth, windowHeight, true);
+
+  reset();
 }
 
 function step() {
@@ -112,7 +126,7 @@ function step() {
 }
 
 function draw() {
-    background(backColour);
+    clear();
 
     translate(cellW / 2, cellH / 2);
     

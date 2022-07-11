@@ -13,12 +13,10 @@ let camHeight;
 function setup() {
     var cnv = createCanvas(windowWidth, windowHeight);
     cnv.parent('visual');
-    reset();
+    windowResized();
 }
 
 function reset() {
-    windowResized();
-
     particle = new Particle(width / 2, height / 2);
     
     // Create some random walls
@@ -43,11 +41,13 @@ function reset() {
 }
 
 function windowResized() {
-  const navbar = document.getElementById('navbar');
-  const visualContainer = document.getElementById('visual');
-  windowWidth = visualContainer.offsetWidth;
-  windowHeight = window.innerHeight - navbar.offsetHeight;
-  resizeCanvas(windowWidth, windowHeight, false);
+    const navbar = document.getElementById('navbar');
+    const visualContainer = document.getElementById('visual');
+    windowWidth = visualContainer.offsetWidth;
+    windowHeight = window.innerHeight - navbar.offsetHeight;
+    resizeCanvas(windowWidth, windowHeight, false);
+
+    reset();
 }
 
 let l = 0;

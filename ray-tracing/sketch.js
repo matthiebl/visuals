@@ -8,12 +8,10 @@ let walls;
 function setup() {
     var cnv = createCanvas(windowWidth, windowHeight);
     cnv.parent('visual');
-    reset();
+    windowResized();
 }
 
 function reset() {
-    windowResized();
-
     particle = new Particle(width / 2, height / 2);
 
     // Create some random walls
@@ -40,6 +38,8 @@ function windowResized() {
     windowWidth = visualContainer.offsetWidth;
     windowHeight = window.innerHeight - navbar.offsetHeight;
     resizeCanvas(windowWidth, windowHeight, false);
+
+    reset();
 }
 
 function draw() {
