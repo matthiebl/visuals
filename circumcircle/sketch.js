@@ -4,8 +4,11 @@ let centre;
 
 function setup() {
     var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch');
+    cnv.parent('visual');
+    windowResized();
+}
 
+function reset() {
     let ax = random(width/10, width - width/10);
     let ay = random(height/10, height - height/10);
     let bx = random(width/10, width - width/10);
@@ -15,7 +18,7 @@ function setup() {
 
     let D = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by));
     if (D === 0) {
-        setup();
+        reset();
     }
     let X = (
         (ax * ax + ay * ay) * (by - cy) +
@@ -35,6 +38,16 @@ function setup() {
     points.push({ x: bx, y: by });
     points.push({ x: cx, y: cy });
     centre = { x: X, y: Y };
+}
+
+function windowResized() {
+    const navbar = document.getElementById('navbar');
+    const visualContainer = document.getElementById('visual');
+    windowWidth = visualContainer.offsetWidth;
+    windowHeight = window.innerHeight - navbar.offsetHeight;
+    resizeCanvas(windowWidth, windowHeight, true);
+
+    reset();
 }
 
 function inCircumcircle(x, y) {
@@ -66,7 +79,7 @@ function circumcircleContains(x, y) {
 }
 
 function draw() {
-    background(51);
+    clear();
     
     let a = points[0];
     let b = points[1];
