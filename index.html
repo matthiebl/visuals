@@ -1,52 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matt's Visuals</title>
 
-    <title>Matt's Visuals</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="visual.css">
+</head>
+<body class="bg-midnightblue">
+  <!-- Navbar -->
+  <nav id="navbar" class="navbar sticky-top navbar-dark bg-darkblue">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand navbar-hidden navbar-icon m-0 px-2 fs-1 fw-bold">&#10140;</a>
+      <a class="navbar-brand m-0 fs-1 fw-bold" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a class="navbar-brand navbar-hidden navbar-icon m-0 px-2 fs-1 fw-bold">&#8634;</a>
+    </div>
+  </nav>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
-  </head>
-  <body class="allow-scroll back-colour">
-    <nav>
-      <a class="navbar-empty"></a>
-      <a class="navbar heading" href="https://matthiebl.github.io/visuals/">Visuals</a>
-      <a class="navbar-empty"></a>
-    </nav>
-
-    <div class="collection">
+  
+  <!-- Redirect Page -->
+  <div id="redirect" class="container-fluid m-0 p-4 pb-5 bg-medblue">
+    <div class="container text-white h-100 p-4">
       <h1>Matt's Visuals</h1>
-
+    
       <p>Hello, I'm Matt, and this is a collection of visuals and renderings I have made. The visuals aren't all perfect and may have subtle differences to generic implementations.</p>
-
+    
       <p>I'm currently studying Computer Science at UNSW and this project is just for fun. The most recent updates to the site I am currently making is to update all the visual HTML and CSS. I didn't consider this too important at first, however as my skills with frontend are developing I realised that the site's look is also a visual I can work on. This change is not fully complete so <i>most</i> pages are still being updated. As a note for mobile use - I have tried my best at making the pages work for smaller screens but it's far from perfect, hopefully you can still see everything :/</p>
-
+    
       <p>The rendering of the visuals is done with the p5js library to make things easier for myself.</p>
-
+    
       <p>Feel free to look around!</p>
     </div>
 
-    <div class="collection">
+    <div class="container text-white h-100 p-4">
       <h1>Grouped Projects</h1>
 
-      <div class="grid grid-fill">
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="sort/">Sorting Algorithms</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="graphs/">Graphs</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="physics/">Physics</a></div>
+      <div class="row g-3">
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="sort/">
+            Sorting Algorithms
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="graphs/">
+            Graphs
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="physics/">
+            Physics
+          </a>
+        </div>
       </div>
     </div>
 
-    <div class="collection padded-bottom">
+    <div class="container text-white h-100 p-4">
       <h1>Individual Projects</h1>
 
-      <div class="grid grid-fill">
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="bezier-curves/">Bezier Curves</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="ray-cast-render/">Ray Cast Rendering</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="ray-tracing/">Ray Casting</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="self-walk/">Self Directed Walk</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="circumcircle/">Circumcircle</a></div>
+      <div class="row g-3">
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="bezier-curves/">
+            Bezier Curves
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="ray-cast-render/">
+            Ray Cast Rendering
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="ray-tracing/">
+            Ray Casting
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="self-walk/">
+            Self Directed Walk
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="circumcircle/">
+            Circumcircle
+          </a>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-darkblue">
+    <div class="d-flex h-100 justify-content-center align-items-center">
+      <a class="lead" href="">Github</a>
+    </div>
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <script>
+    function resizeScreen() {
+      const navbar = document.getElementById('navbar');
+      const redirect = document.getElementById('redirect');
+      const footer = document.getElementById('footer');
+      footer.style.height = navbar.offsetHeight + 'px';
+      redirect.style.minHeight = window.innerHeight - navbar.offsetHeight - footer.offsetHeight + 'px';
+    }
+    window.addEventListener('resize', resizeScreen);
+    window.onload = resizeScreen;
+  </script>
+</body>
 </html>

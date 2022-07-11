@@ -10,11 +10,16 @@ body {
 
 a {
     text-decoration: none;
-    color: rgb(202, 202, 202);
+    color: rgb(236, 236, 236);
     transition: 0.5s;
 }
 
 a:hover:not(.navbar-icon) {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-brand:hover:not(.navbar-icon) {
     text-decoration: none;
     color: white;
     letter-spacing: 0.5rem;
