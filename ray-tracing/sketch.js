@@ -31,7 +31,7 @@ function reset() {
     walls.push(new Wall(-1, -1, width + 1, -1));
     walls.push(new Wall(-1, -1, -1, height + 1));
     walls.push(new Wall(-1, height + 1, width + 1, height + 1));
-    walls.push(new Wall(width, 0, width, height));
+    walls.push(new Wall(width + 1, -1, width + 1, height + 1));
 }
 
 function windowResized() {

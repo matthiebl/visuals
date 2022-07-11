@@ -11,11 +11,14 @@ let camWidth;
 let camHeight;
 
 function setup() {
-    var cnv = createCanvas(0.75 * windowWidth, windowHeight);
-    cnv.parent('sketch');
+    var cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent('visual');
+    reset();
+}
 
-    background(0);
-    
+function reset() {
+    windowResized();
+
     particle = new Particle(width / 2, height / 2);
     
     // Create some random walls
@@ -30,13 +33,21 @@ function setup() {
         walls.push(new Wall(x1, y1, x2, y2));
     }
     // Create walls around the edge of scene
-    walls.push(new Wall(0, 0, width, 0));
-    walls.push(new Wall(0, 0, 0, height));
-    walls.push(new Wall(0, height, width, height));
-    walls.push(new Wall(width, 0, width, height));
+    walls.push(new Wall(-1, -1, width + 1, -1));
+    walls.push(new Wall(-1, -1, -1, height + 1));
+    walls.push(new Wall(-1, height + 1, width + 1, height + 1));
+    walls.push(new Wall(width + 1, -1, width + 1, height + 1));
 
     camWidth = width / 4;
     camHeight = height / 4;
+}
+
+function windowResized() {
+  const navbar = document.getElementById('navbar');
+  const visualContainer = document.getElementById('visual');
+  windowWidth = visualContainer.offsetWidth;
+  windowHeight = window.innerHeight - navbar.offsetHeight;
+  resizeCanvas(windowWidth, windowHeight, false);
 }
 
 let l = 0;
@@ -77,7 +88,7 @@ function keyReleased() {
 
 function draw() {
     speed = map(select('#speed').value(), 0, 10, 1, 5);
-    background(0);
+    clear(0);
     
     particle.lookAt(mouseX, mouseY);
     particle.update(particle.pos.x + speed * (l + r), particle.pos.y + speed * (u + d));
