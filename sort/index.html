@@ -1,28 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorting Algoritms</title>
 
-    <title>Sorting Algoritms</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="../visual.css">
+</head>
+<body class="bg-midnightblue">
+  <!-- Navbar -->
+  <nav id="navbar" class="navbar sticky-top navbar-dark bg-darkblue">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand navbar-back navbar-icon m-0 px-2 fs-1 fw-bold" href="../">&#10140;</a>
+      <a class="navbar-brand m-0 fs-1 fw-bold" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a class="navbar-brand navbar-hidden navbar-icon m-0 px-2 fs-1 fw-bold">&#8634;</a>
+    </div>
+  </nav>
 
-    <link rel="stylesheet" type="text/css" href="../style.css">
-  </head>
-  <body class="allow-scroll back-colour">
-    <nav>
-      <a class="navbar arrow-back" href="../">&#10140;</a>
-      <a class="navbar heading" href="https://matthiebl.github.io/visuals/">Visuals</a>
-      <a class="navbar-empty"></a>
-    </nav>
-
-    <div class="collection padded-bottom">
+  <!-- Redirect Page -->
+  <div id="redirect" class="container-fluid m-0 p-4 bg-medblue">
+    <div class="container text-white h-100 p-4">
       <h1>Sorting Algorithms</h1>
 
-      <div class="grid grid-fill">
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="bubble/">Bubble Sort</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="selection/">Selection Sort</a></div>
-        <div class="collection-item"><a class="fullsize flex-box flex-centered" href="insertion/">Insertion Sort</a></div>
+      <div class="row g-3">
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="bubble/">
+            Bubble Sort
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="selection/">
+            Selection Sort
+          </a>
+        </div>
+        <div class="visual-card col-12 col-md-6 col-lg-4">
+          <a class="visual-card bg-midnightblue lead w-100 h-100" href="insertion/">
+            Insertion Sort
+          </a>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-darkblue">
+    <div class="d-flex h-100 justify-content-center align-items-center">
+      <a class="lead" href="">Github</a>
+    </div>
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <script>
+    function resizeScreen() {
+      const navbar = document.getElementById('navbar');
+      const redirect = document.getElementById('redirect');
+      const footer = document.getElementById('footer');
+      footer.style.height = navbar.offsetHeight + 'px';
+      redirect.style.minHeight = window.innerHeight - navbar.offsetHeight - footer.offsetHeight + 'px';
+    }
+    window.addEventListener('resize', resizeScreen);
+    window.onload = resizeScreen;
+  </script>
+</body>
 </html>
