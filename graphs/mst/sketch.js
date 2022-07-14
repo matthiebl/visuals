@@ -174,7 +174,7 @@ function drawPrims() {
         let v = pE[w];
         if (v !== -1) {
             stroke(redColour);
-            strokeWeight(2);
+            strokeWeight(min(2, min(10, vertices[v].r / 5)));
             line(vertices[v].x, vertices[v].y, vertices[w].x, vertices[w].y);
         }
     }
