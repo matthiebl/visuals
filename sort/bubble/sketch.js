@@ -17,11 +17,13 @@ let i, j;
 let items;
 
 function setup() {
-    var cnv = createCanvas(windowWidth * 0.5, min(windowHeight * 0.4, 300));
-    cnv.parent('canvas');
-    
+    var cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent('visual');
     setupColours();
+    windowResized();
+}
 
+function reset() {
     items = [];
     for (let i = 0; i < width; i++) {
         items[i] = random(height);
@@ -31,15 +33,25 @@ function setup() {
     j = items.length - 1;
 }
 
+function windowResized() {
+    const navbar = document.getElementById('navbar');
+    const visualContainer = document.getElementById('visual');
+    windowWidth = visualContainer.offsetWidth;
+    windowHeight = window.innerHeight - navbar.offsetHeight;
+    resizeCanvas(0.7 * windowWidth, 0.6 * windowHeight, false);
+
+    reset();
+}
+
 function draw() {
-    background(backColour);
+    clear();
 
     // Determine the style to display the items
     const allStyles = document.getElementsByName('visual');
     let thisStyle;
     for (const style of allStyles) {
         if (style.checked) {
-            thisStyle = style.value;
+            thisStyle = style.id;
         }
     }
     
