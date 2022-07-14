@@ -1,97 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selection Sort</title>
 
-    <title>Selection Sort</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="../../style.css">
+  <link rel="stylesheet" type="text/css" href="../../visual.css">
 
-    <script src="../../libraries/p5.min.js"></script>
-  </head>
-  <body onload="resizeScreen()">
-    <nav>
-      <a class="navbar arrow-back" href="../">&#10140;</a>
-      <a class="navbar heading" href="https://matthiebl.github.io/visuals/">Visuals</a>
-      <a id="burger" class="navbar">&#9776;</a>
-    </nav>
+  <script src="../../libraries/p5.min.js"></script>
+</head>
+<body class="bg-darkblue">
+  <!-- Navbar -->
+  <nav id="navbar" class="navbar sticky-top navbar-dark bg-darkblue">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand navbar-back navbar-icon m-0 px-2 fs-1 fw-bold" href="../">&#10140;</a>
+      <a class="navbar-brand m-0 fs-1 fw-bold" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a class="navbar-brand navbar-icon m-0 px-2 fs-1 fw-bold" href="#" onclick="reset()">&#8634;</a>
+    </div>
+  </nav>
 
-    <div id="visual-container">
-      <div id="canvas-container" class="flex-col flex-centered back-colour">
-        <div id="canvas"></div>
+  <!-- Visual -->
+  <section>
+    <div id="visual" class="d-flex justify-content-center align-items-center container-fluid m-0 p-0 bg-medblue"></div>
+  </section>
+
+  <!-- Information -->
+  <section id="info" class="container-fluid m-0 p-0 pb-3 bg-midnightblue text-white">
+    <div class="container-fluid d-flex flex-column-reverse flex-lg-row">
+      <div class="container p-3">
+        <h1>Selection Sort</h1>
+
+        <p>
+          Selection sort is a simple sorting algorithm that works by iterating over the elements and selecting the correct element for each position. Once it is found, it is swapped with the current position.
+        </p>
+        <p>
+          It simply starts from the left and selects the smallest element and moves it to the correct place. It then moves to the next position and repeats this process until all the elements are in the correct position.
+        </p>
+        <p>
+          Selection sort is a very slow sort algorithm due to needing n comparisons to select the correct element for each n positions. Thus the time complexity is O(n^2).
+        </p>
+        <p>
+          The red line represents the position where the next smallest element is to be placed.
+        </p>
       </div>
-      <div id="sidebar" class>
-        <div id="info" class="info-box">
-          <h1>Selection Sort</h1>
-          
-          <div class="slider">
-            <span class="slider-title">Speed</span>
-            <input id="speed" class="slider-slide" type="range" min="1" max="20" value="10" onchange="updateSlider(this)">
-            <span id="speedDisplay" class="slider-value">10</span>
-          </div>
-  
-          <b>
-            Sorting Visualisation:
-          </b>
-          <div class="radio">
-            <input id="height" type="radio" name="visual" value="height" checked/>
-            <label for="height">Height</label>
-          </div>
-          <div class="radio">
-            <input id="colour" type="radio" name="visual" value="colour" />
-            <label for="colour">Colour</label>
-          </div>
-
-          <p>
-            Selection sort is a simple sorting algorithm that works by iterating over the elements and selecting the correct element for each position. Once it is found, it is swapped with the current position.
-          </p>
-          <p>
-            It simply starts from the left and selects the smallest element and moves it to the correct place. It then moves to the next position and repeats this process until all the elements are in the correct position.
-          </p>
-          <p>
-            Selection sort is a very slow sort algorithm due to needing n comparisons to select the correct element for each n positions. Thus the time complexity is O(n^2).
-          </p>
-          <p>
-            The red line represents the position where the next smallest element is to be placed.
-          </p>
-        </div>
+      <div class="container p-3">
+        <h2>Settings</h2>
         
-        <div class="link-box">
-          <a id="reset" class="flex-box flex-centered" onclick="setup()">Reset</a>
-          <a id="source" class="flex-box flex-centered" href="https://github.com/matthiebl/visuals/blob/master/sort/selection/" target="_blank">Source Code</a>
+        <label for="speed" class="form-label">Speed</label>
+        <input type="range" class="form-range" min="1" max="20" value="10" id="speed">
+
+        <label for="" class="form-label">Visual Style</label>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="visual" id="height" checked>
+          <label class="form-check-label" for="height">
+            Height
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="visual" id="colour">
+          <label class="form-check-label" for="colour">
+            Hue Rainbow
+          </label>
+        </div>
+
+        <button onclick="reset()">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-darkblue">
+    <div class="container h-100">
+      <div class="row w-100 h-100">
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
+          <a class="lead" href="https://github.com/matthiebl/visuals/blob/master/sort/bubble/">Souce Code</a>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
+          <a class="lead" href="https://github.com/matthiebl/">Github</a>
         </div>
       </div>
     </div>
-
-    <script src="sketch.js"></script>
-    <script>
-      function updateSlider(slider) {
-        const display = document.getElementById(slider.id + 'Display')
-        display.innerHTML = slider.value;
-      }
-
-      function resizeScreen() {
-        windowWidth = window.innerWidth;
-        windowHeight = window.innerHeight;
-
-        // console.log(windowWidth * 0.2 * windowHeight);
-        if (windowWidth * 0.2 * windowHeight < 350000) {
-          document.getElementById('info').classList.add('closed');
-        } else {
-          document.getElementById('info').classList.remove('closed');
-        }
-
-        setup();
-      }
-
-      window.addEventListener('resize', resizeScreen);
-
-      document.getElementById('burger').addEventListener('click', () => {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('closed');
-      });
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <script>
+    function resizeScreen() {
+      const navbar = document.getElementById('navbar');
+      const visual = document.getElementById('visual');
+      const footer = document.getElementById('footer');
+      visual.style.height = window.innerHeight - navbar.offsetHeight + 'px';
+      footer.style.height = navbar.offsetHeight + 'px';
+    }
+    window.addEventListener('resize', resizeScreen);
+    window.onload = resizeScreen;
   </script>
+  <script src="sketch.js"></script>
   </body>
 </html>
-
