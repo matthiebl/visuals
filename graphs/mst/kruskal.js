@@ -1,21 +1,26 @@
 
 var kruskal = function(p) {
 
-    p.setup = function(nV=50, seed=0) {
-        var cnv2 = p.createCanvas(0.375 * p.windowWidth, p.windowHeight);
-        cnv2.parent('kruskal-sketch');
+    p.setup = function() {
+        var cnv2 = p.createCanvas(0.5 * p.windowWidth, p.windowHeight);
+        cnv2.parent('visual2');
+        p.seed = 0;
+        p.windowResized();        
+    }
 
+    p.reset = function() {
+        nV = p.select('#numVert').value();
         p.g = new Graph(nV);
 
         // Create some dummy edges
-        let r = p.width / 30 * 3 / (nV ** 0.35);
+        let r = p.windowWidth / 30 * 3 / (nV ** 0.35);
         p.vertices = [];
-        p.randomSeed(seed);
+        p.randomSeed(p.seed);
         for (let i = 0; i < p.g.getNumVertices(); i++) {
-            let x = p.random(r + 5, p.width - (r + 5));
+            let x = p.random(r + 5, p.windowWidth - (r + 5));
             let y = p.random(r + 5, p.height - (r + 5));
             while (p.vertices.some(v => p.dist(v.x, v.y, x, y) < 2 * r)) {
-                x = p.random(r + 5, p.width - (r + 5));
+                x = p.random(r + 5, p.windowWidth - (r + 5));
                 y = p.random(r + 5, p.height - (r + 5));
             }
 
@@ -43,6 +48,16 @@ var kruskal = function(p) {
         p.mstVerts = new Set([]);
         p.mstEdges = [];
         p.currEdge = null;
+    }
+    
+    p.windowResized = function() {
+        const navbar = document.getElementById('navbar');
+        const visualContainer = document.getElementById('visual2');
+        p.windowWidth = visualContainer.offsetWidth;
+        p.windowHeight = window.innerHeight - navbar.offsetHeight;
+        p.resizeCanvas(0.5 * p.windowWidth, p.windowHeight, false);
+    
+        p.reset();
     }
 
     p.kruskalStep = function() {
@@ -86,12 +101,12 @@ var kruskal = function(p) {
             p.kruskalStep();
         }
 
-        p.background(0);
+        p.clear();
 
-        p.noFill();
-        p.stroke(255);
-        p.strokeWeight(10);
-        p.rect(0, 0, p.width, p.height);
+        // p.noFill();
+        // p.stroke(255);
+        // p.strokeWeight(2);
+        // p.rect(0, 0, p.windowWidth, p.height);
 
         // Edges in MST
         for (let [v, w] of p.mstEdges) {

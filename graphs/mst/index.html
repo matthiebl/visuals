@@ -1,89 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Spanning Tree</title>
 
-        <title>Minimal Spanning Tree</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 
-        <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="../../visual.css">
 
-        <script src="../../libraries/p5.min.js"></script>
-        <script>
-            function display_val(id, x) {
-                document.getElementById(id).innerHTML = x;
-            }
+  <script src="../../libraries/p5.min.js"></script>
+</head>
+<body class="bg-darkblue">
+  <!-- Navbar -->
+  <nav id="navbar" class="navbar sticky-top navbar-dark bg-darkblue">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand navbar-back navbar-icon m-0 px-2 fs-1 fw-bold" href="../">&#10140;</a>
+      <a class="navbar-brand m-0 fs-1 fw-bold" href="https://matthiebl.github.io/visuals/">Visuals</a>
+      <a class="navbar-brand navbar-icon m-0 px-2 fs-1 fw-bold" onclick="step()" href="#">&#8634;</a>
+    </div>
+  </nav>
 
-            function stepSimulation() {
-                if (speed.value == 0) {
-                    prims.primStep();
-                    kruskals.kruskalStep();
-                }
-            }
+  <!-- Visual -->
+  <section>
+    <div id="visual" class="container-fluid m-0 p-0 bg-medblue" style="z-index: 5;"></div>
+  </section>
 
-            function resetSimulation() {
-                let time = (new Date).getTime();
-                prims.setup(numVert.value, time);
-                kruskals.setup(numVert.value, time);
-            }
+  <!-- Information -->
+  <section id="info" class="container-fluid m-0 p-0 pb-3 bg-midnightblue text-white">
+    <div class="container-fluid d-flex flex-column-reverse flex-lg-row">
+      <div class="container p-3">
+        <h1>Minimal Spanning Tree</h1>
+        <p>
+          This is a visual representation of two main MST algorithms. The one on the left is <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's algorithm</a>, and the one on the right is <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's algorithm</a>. They are both finding the MST of a complete graph with the Euclidean distance between each vertex as the edge weight.
+        </p>
+      </div>
 
-            function updateNumVertices() {
-                display_val('num-vert-display', numVert.value); prims.setup(numVert.value); kruskals.setup(numVert.value);
-            }
+      <div class="container p-3">
+        <h2>Settings</h2>
 
-            window.addEventListener('resize', function(event) {
-                windowWidth = window.innerWidth;
-                windowHeight = window.innerHeight;
-                resetSimulation();
-            });
-        </script>
-    </head>
+        <label for="numVert" class="form-label">Vertices</label>
+        <input type="range" class="form-range" min="3" max="300" value="50" onchange="reset()" id="numVert">
+        
+        <label for="speed" class="form-label">Speed</label>
+        <input type="range" class="form-range" min="0" max="100" value="25" id="speed">
 
-    <body>
-        <div id="container">
-            <div id="prim-sketch"></div>
-            <div id="kruskal-sketch"></div>
-            <div id="info">
-                <div>
-                    <h1>Minimal Spanning Tree</h1>
-                    <p>
-                        This is a visual representation of two main MST
-                        algorithms. The one on the left is 
-                        <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm" target="_blank">Prim's algorithm</a>,
-                        and the one on the right is
-                        <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm" target="_blank">Kruskal's algorithm</a>.
-                        They are both finding the MST of a complete graph with
-                        the Euclidean distance between each vertex as the edge
-                        weight.
-                    </p>
-                    <button onclick="resetSimulation()">Reset</button>
-                    <br>
-                    <div>
-                        <p>Solve speed:</p>
-                        <input style="width: 100%" type="range" min="0" max="100" value="25" id="speed">
-                    </div>
-                    <button onclick="stepSimulation()">Step</button>
-                    <div>
-                        <p>Vertices: <span id="num-vert-display">50</span></p>
-                        <input style="width: 100%" type="range" min="3" max="300" value="50" id="numVert" onchange="updateNumVertices()">
-                    </div>
-                </div>
-                <div style="position: absolute; bottom: 2%; right: 2%">
-                    <p style="text-align: right">
-                        This visual was made with p5js
-                        <br>
-                        <br>
-                        You can view my <a href="../../">other visuals</a>
-                        <br>
-                        <br>
-                        Or check out the 
-                        <a href="https://github.com/matthiebl/visuals/blob/master/graphs/mst" target="_blank">source code</a>
-                    </p>
-                </div>
-            </div>
+        <button onclick="step()">Step</button>
+
+        <br />
+        <br />
+        
+        <button onclick="reset()">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="bg-darkblue">
+    <div class="container h-100">
+      <div class="row w-100 h-100">
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
+          <a class="lead" href="https://github.com/matthiebl/visuals/blob/master/graphs/mst/" target="_blank">Souce Code</a>
         </div>
-        <script src="../Graph.js"></script>
-        <script src="prim.js"></script>
-        <script src="kruskal.js"></script>
-    </body>
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
+          <a class="lead" href="https://github.com/matthiebl/" target="_blank">Github</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <script>
+    function resizeScreen() {
+      let navbar = document.getElementById('navbar');
+      let visual1 = document.getElementById('visual');
+      let footer = document.getElementById('footer');
+      visual.style.height = window.innerHeight - navbar.offsetHeight + 'px';
+      footer.style.height = navbar.offsetHeight + 'px';
+    }
+    window.addEventListener('resize', resizeScreen);
+    window.onload = resizeScreen;
+  </script>
+  <script src="../Graph.js"></script>
+  <script src="sketch.js"></script>
+</body>
 </html>
