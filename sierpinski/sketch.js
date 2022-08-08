@@ -25,11 +25,24 @@ function setup() {
 
 function reset() {
     clear();
-    let x = (height - 40) / Math.sqrt(3);
+
+    let V = select('#verts').value();
+
+    let r = min(width, height) / 2 - 40;
+    let line = createVector(0, -r);
+
+    let center;
+    if (V == 3) {
+        center = createVector(width / 2, height / 2 + r / 5);
+    } else {
+        center = createVector(width / 2, height / 2);
+    }
+
     t = [];
-    t.push(createVector(width / 2, 20));
-    t.push(createVector(width / 2 + x, height - 20));
-    t.push(createVector(width / 2 - x, height - 20));
+    for (let i = 0; i < V; i++) {
+        t.push(p5.Vector.add(center, line));
+        line.rotate(2 * Math.PI / V);
+    }
 
     last = null;
 

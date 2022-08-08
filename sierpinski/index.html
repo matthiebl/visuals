@@ -36,30 +36,38 @@
       <div class="container p-3">
         <h1>Sierpinski Triangle</h1>
 
+        <p>Click anywhere to start!</p>
+
         <p>
-          Bubble sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements if they are in
-          the wrong order.
+          The Sierpinski Triangle is a popular fractal, known for being remarkably easy to draw and its pleasing shape.
         </p>
+
         <p>
-          On each pass of the array, the smallest element is moved to the left, and as such each element is bubbled down
-          to the bottom. There is also an alternative version of bubble sort known as bubble up where the largest
-          element is moved up to the right.
+          To generate this fractal, we could recursively add upside-down equilateral triangles to the center of the
+          space left around placing the previous triangle, until the shape is made.
         </p>
+
         <p>
-          Bubble sort is a very slow sort algorithm due to needing n comparisons for each pass and there is up to n
-          passes needed. Thus the time complexity is O(n^2).
+          Alternatively, using the 'Chaos game', we can produce the shape by randomly placing the first point (in this
+          case you click anywhere) and then randomly choosing a point from the main large triangle. We then place
+          another point halfway between them and repeat for the next point, with each next point being created from the
+          last.
         </p>
+
         <p>
-          The red line represents where the sorting algorithm is up to, so everything to the left is sorted.
+          Just for your amusement, you can also see what this strategy will do for other shapes larger than a triangle.
         </p>
       </div>
       <div class="container p-3">
         <h2>Settings</h2>
 
         <label for="speed" class="form-label">Speed</label>
-        <input type="range" class="form-range" min="1" max="20" value="10" id="speed">
+        <input type="range" class="form-range" min="1" max="20" value="5" id="speed">
 
-        <br />
+        <label for="verts" class="form-label" id="vertsLabel">Vertices: 3</label>
+        <input type="range" class="form-range" min="3" max="11" value="3" id="verts"
+          onchange="updateSlider(this.id, this.value, 'Vertices')">
+
         <br />
 
         <button onclick="reset()">Reset</button>
@@ -72,10 +80,11 @@
     <div class="container h-100">
       <div class="row w-100 h-100">
         <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
-          <a class="lead" href="https://github.com/matthiebl/visuals/blob/master/sort/bubble/">Souce Code</a>
+          <a class="lead" href="https://github.com/matthiebl/visuals/blob/master/sierpinski/" target="_blank">Souce
+            Code</a>
         </div>
         <div class="col-12 col-md-6 d-flex justify-content-center align-items-center h-100">
-          <a class="lead" href="https://github.com/matthiebl/">Github</a>
+          <a class="lead" href="https://github.com/matthiebl/" target="_blank">Github</a>
         </div>
       </div>
     </div>
@@ -94,6 +103,13 @@
     }
     window.addEventListener('resize', resizeScreen);
     window.onload = resizeScreen;
+
+    function updateSlider(id, val, msg) {
+      let slider = document.getElementById(id + 'Label');
+      slider.innerHTML = msg + ': ' + val;
+
+      reset();
+    }
   </script>
   <script src="sketch.js"></script>
 </body>
