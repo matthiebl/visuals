@@ -24,18 +24,18 @@ function restart() {
     sqw = width / (w + 2);
     sqh = height / (h + 2);
     start = [0, 0];
-    end = [w-1, h-1];
+    end = [w - 1, h - 1];
     randomizedPrims(start, end, w, h);
 }
 
 function windowResized() {
-  const navbar = document.getElementById('navbar');
-  const visualContainer = document.getElementById('visual');
-  windowWidth = visualContainer.offsetWidth;
-  windowHeight = window.innerHeight - navbar.offsetHeight;
-  resizeCanvas(windowWidth, windowHeight, false);
+    const navbar = document.getElementById('navbar');
+    const visualContainer = document.getElementById('visual');
+    windowWidth = visualContainer.offsetWidth;
+    windowHeight = window.innerHeight - navbar.offsetHeight;
+    resizeCanvas(windowWidth, windowHeight, false);
 
-  restart();
+    restart();
 }
 
 function randomizedPrims(start, end, width, height) {
@@ -59,9 +59,9 @@ function randomizedPrims(start, end, width, height) {
         // let next = random(options);
         // options.splice(options.indexOf(next), 1);
         let next = options.pop();
-        
+
         let [nx, ny] = next;
-        
+
         let neighbours = [[nx + 2, ny], [nx, ny + 2], [nx - 2, ny], [nx, ny - 2]];
         neighbours = neighbours.filter(([x, y]) => !(x < 0 || y < 0 || x >= width || y >= height) && maze[x][y]);
 
@@ -73,7 +73,7 @@ function randomizedPrims(start, end, width, height) {
             let [tx, ty] = neighbour;
 
             maze[nx][ny] = true;
-            maze[(nx+tx) / 2][(ny+ty) / 2] = true;
+            maze[(nx + tx) / 2][(ny + ty) / 2] = true;
             maze[tx][ty] = true;
         }
 
@@ -83,7 +83,7 @@ function randomizedPrims(start, end, width, height) {
             options.push(neighbour);
         }
     }
-    
+
     if (!maze[ex][ey]) {
         maze[ex][ey] = true;
 
@@ -100,31 +100,31 @@ function draw() {
     clear();
 
     translate(sqw, sqh);
-    
+
     strokeWeight(1);
     fill(0);
     for (let i = 0; i < w + 2; i++) {
-        rect((i-1)*sqw, -sqh, sqw, sqh);
-        rect((i-1)*sqw, h*sqh, sqw, sqh);
+        rect((i - 1) * sqw, -sqh, sqw, sqh);
+        rect((i - 1) * sqw, h * sqh, sqw, sqh);
     }
     for (let i = 0; i < h; i++) {
-        rect(-sqw, i*sqh, sqw, sqh);
-        rect(w*sqw, i*sqh, sqw, sqh);
+        rect(-sqw, i * sqh, sqw, sqh);
+        rect(w * sqw, i * sqh, sqw, sqh);
     }
-    
+
     for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
             if (!maze[x][y]) {
-                rect(x*sqw, y*sqh, sqw, sqh);
+                rect(x * sqw, y * sqh, sqw, sqh);
             }
         }
     }
 
     fill('green');
     let [x, y] = start;
-    rect(x*sqw, y*sqh, sqw, sqh);
+    rect(x * sqw, y * sqh, sqw, sqh);
 
     fill('red');
     [x, y] = end;
-    rect(x*sqw, y*sqh, sqw, sqh);
+    rect(x * sqw, y * sqh, sqw, sqh);
 }
