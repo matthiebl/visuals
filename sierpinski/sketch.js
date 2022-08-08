@@ -13,6 +13,7 @@ function setupColours() {
     greenColour = color(138, 201, 38);
 }
 
+let POINT_LIMIT = 1_000_000
 let t;
 let last;
 
@@ -73,8 +74,8 @@ function mouseReleased() {
 function draw() {
     let speed = select('#speed').value() ** 2;
 
-    if (last != null) {
-        for (let i = 0; i < speed; i++) {
+    if (last != null && points < POINT_LIMIT) {
+        for (let i = 0; i < speed && points < POINT_LIMIT; i++) {
             let x1 = last.x;
             let y1 = last.y;
             let rand = random(t);
@@ -82,8 +83,8 @@ function draw() {
             let y2 = rand.y;
             last = createVector((x1 + x2) / 2, (y1 + y2) / 2);
             point(last.x, last.y)
+            points++;
         }
-        points += speed;
         select('#points').html('Total Points: ' + points);
     }
 }
