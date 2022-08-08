@@ -55,10 +55,12 @@ function windowResized() {
 function draw() {
     clear();
 
+    let speed = select('#speed').value();
+
     translate(sqw, sqh);
 
-    let found = false;
-    while (walls.length > 0 && !found) {
+    let found = 0;
+    while (walls.length > 0 && found < speed) {
         let wall = random(walls);
         walls.splice(walls.indexOf(wall), 1);
 
@@ -82,7 +84,7 @@ function draw() {
 
             walls.push(...adj);
 
-            found = true;
+            found++;
         }
     }
 
