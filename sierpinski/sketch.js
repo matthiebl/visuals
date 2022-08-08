@@ -16,6 +16,8 @@ function setupColours() {
 let t;
 let last;
 
+let points;
+
 function setup() {
     var cnv = createCanvas(windowWidth, windowHeight);
     cnv.parent('visual');
@@ -27,6 +29,7 @@ function reset() {
     clear();
 
     let V = select('#verts').value();
+    points = V;
 
     let r = min(width, height) / 2 - 40;
     let line = createVector(0, -r);
@@ -69,7 +72,6 @@ function mouseReleased() {
 
 function draw() {
     let speed = select('#speed').value() ** 2;
-    // Draw points of main shape
 
     if (last != null) {
         for (let i = 0; i < speed; i++) {
@@ -81,5 +83,7 @@ function draw() {
             last = createVector((x1 + x2) / 2, (y1 + y2) / 2);
             point(last.x, last.y)
         }
+        points += speed;
+        select('#points').html('Total Points: ' + points);
     }
 }
