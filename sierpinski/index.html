@@ -48,14 +48,14 @@
         </p>
 
         <p>
-          Alternatively, using the 'Chaos game', we can produce the shape by randomly placing the first point (in this
-          case you click anywhere) and then randomly choosing a point from the main large triangle. We then place
-          another point halfway between them and repeat for the next point, with each next point being created from the
-          last.
+          However, in this case, we use a Chaos game approach. First you click anywhere on the screen and the first dot
+          appears. Then, we randomly choose a vertex from the main shape and place a new dot halfway between the two.
+          Now using this new point and another random vertex from the main shape we go halfway between these and repeat.
         </p>
 
         <p>
           Just for your amusement, you can also see what this strategy will do for other shapes larger than a triangle.
+          And you can even try changing the distance between the two points the next point will be placed.
         </p>
       </div>
       <div class="container p-3">
@@ -68,7 +68,11 @@
 
         <label for="verts" class="form-label" id="vertsLabel">Vertices: 3</label>
         <input type="range" class="form-range" min="3" max="11" value="3" id="verts"
-          onchange="updateSlider(this.id, this.value, 'Vertices')">
+          onchange="updateSlider(this.id, this.value, 'Vertices'); reset()">
+
+        <label for="dist" class="form-label" id="distLabel">Distance: 0.5</label>
+        <input type="range" class="form-range" min="0" max="1" value="0.5" step="0.00001" id="dist"
+          onchange="updateSlider(this.id, this.value, 'Distance')">
 
         <br />
 
@@ -109,8 +113,6 @@
     function updateSlider(id, val, msg) {
       let slider = document.getElementById(id + 'Label');
       slider.innerHTML = msg + ': ' + val;
-
-      reset();
     }
   </script>
   <script src="sketch.js"></script>

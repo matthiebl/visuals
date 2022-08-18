@@ -73,15 +73,12 @@ function mouseReleased() {
 
 function draw() {
     let speed = select('#speed').value() ** 2;
+    let d = select('#dist').value();
 
     if (last != null && points < POINT_LIMIT) {
         for (let i = 0; i < speed && points < POINT_LIMIT; i++) {
-            let x1 = last.x;
-            let y1 = last.y;
             let rand = random(t);
-            let x2 = rand.x;
-            let y2 = rand.y;
-            last = createVector((x1 + x2) / 2, (y1 + y2) / 2);
+            last = p5.Vector.lerp(last, rand, d);
             point(last.x, last.y)
             points++;
         }
