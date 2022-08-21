@@ -14,7 +14,7 @@ function setupColours() {
 }
 
 let POINT_LIMIT = 1_000_000
-let t;
+let shape;
 let last;
 
 let points;
@@ -42,9 +42,9 @@ function reset() {
         center = createVector(width / 2, height / 2);
     }
 
-    t = [];
+    shape = [];
     for (let i = 0; i < V; i++) {
-        t.push(p5.Vector.add(center, line));
+        shape.push(p5.Vector.add(center, line));
         line.rotate(2 * Math.PI / V);
     }
 
@@ -52,7 +52,7 @@ function reset() {
 
     stroke('white');
     strokeWeight(1);
-    for (let p of t) point(p.x, p.y);
+    for (let p of shape) point(p.x, p.y);
 }
 
 function windowResized() {
@@ -73,11 +73,27 @@ function mouseReleased() {
 
 function draw() {
     let speed = select('#speed').value() ** 2;
-    let d = select('#dist').value();
+
+    let polydist = select('#polygasket').checked();
+    let d;
+    if (polydist) {
+        let n = shape.length;
+        // Formula from https://observablehq.com/@mcmcclur/poly-gaskets
+        d = 1 - Math.sin(Math.PI / n) / (Math.sin(Math.PI / n) + Math.sin(Math.PI / n + (2 * Math.PI * Math.floor(n / 4)) / n));
+
+        let distSlider = select('#dist');
+        distSlider.value(d);
+        updateSlider('dist', d, 'Distance');
+
+        document.getElementById('dist').disabled = true;
+    } else {
+        document.getElementById('dist').disabled = false;
+        d = select('#dist').value();
+    }
 
     if (last != null && points < POINT_LIMIT) {
         for (let i = 0; i < speed && points < POINT_LIMIT; i++) {
-            let rand = random(t);
+            let rand = random(shape);
             last = p5.Vector.lerp(last, rand, d);
             point(last.x, last.y)
             points++;
